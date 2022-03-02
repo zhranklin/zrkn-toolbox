@@ -1,0 +1,15 @@
+FROM BASE_FROM_IMG
+ENV TZ=Asia/Shanghai LANG=C.UTF-8 LANGUAGE=C.UTF-8 LC_ALL=C.UTF-8
+ENV JAVA_OPTS="-Dfile.encoding=UTF-8"
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+RUN apt-get update && apt-get install -y unzip wget nano vim expat expect net-tools less netcat lsof
+ARG TARGETARCH
+RUN bash -c "wget https://github.com/mikefarah/yq/releases/download/v4.21.1/yq_linux_$TARGETARCH.tar.gz -O - | tar xz && mv yq_linux_$TARGETARCH /usr/bin/yq"
+RUN (echo "#!/usr/bin/env sh" && wget -O - https://github.com/lihaoyi/Ammonite/releases/download/2.5.2/3.1-2.5.2) > /usr/local/bin/amm && chmod +x /usr/local/bin/amm
+RUN mkdir -p /root/.ammonite
+ENV COURSIER_REPOSITORIES=https://maven.aliyun.com/nexus/content/groups/public/
+RUN wget -O - https://github.com/zhranklin/easy_kubectl/archive/1.0.21.tar.gz \
+    | tar xzO easy_kubectl-1.0.21/install.sh > /usr/local/bin/easy_kubectl.sh \
+    && chmod +x /usr/local/bin/easy_kubectl.sh \
+    && wget -O - https://github.com/junegunn/fzf/releases/download/0.24.3/fzf-0.24.3-linux_$TARGETARCH.tar.gz | tar xzO > /usr/local/bin/fzf \
+    && chmod +x /usr/local/bin/fzf
