@@ -16,9 +16,9 @@ if test -z "${IGNORE_DIRTY}" && test -n "$(git status -s --porcelain)"; then
 fi
 
 # dockerfile=Dockerfile.base
-# pairs="v0.0.1-base,openjdk:8u312 v0.0.1-base-tomcat,tomcat:8.0.49-jre8 v0.0.1-base-jdk17,openjdk:17.0.2-buster"
+# pairs="v0.0.2-base,openjdk:17.0.2-buster v0.0.2-base-java8,openjdk:8u312"
 dockerfile=Dockerfile
-pairs="$TAG,zhranklin/toolbox:v0.0.1-base $TAG-tomcat,zhranklin/toolbox:v0.0.1-base-tomcat $TAG-jdk17,zhranklin/toolbox:v0.0.1-base-jdk17"
+pairs="$TAG,zhranklin/toolbox:v0.0.2-base $TAG-java8,zhranklin/toolbox:v0.0.2-base-java8 $TAG-tomcat,zhranklin/toolbox:v0.0.1-base-tomcat"
 
 for pair in $pairs; do
   arr=(${pair//,/ })
@@ -28,7 +28,7 @@ for pair in $pairs; do
   mfargs="$image:$tag"
   for arch in amd64 arm64; do
     arch_img=$image:${tag}_linux_$arch
-    cat docker/$dockerfile|sed "1d; 2iFROM $from" | docker buildx build --platform linux/$arch --load . -f - -t $arch_img
+    cat docker/$dockerfile|sed "1d; 2iFROM $from" | docker buildx build --build-arg proxy=$HTTP_PROXY --platform linux/$arch --load . -f - -t $arch_img
     docker push $arch_img
     mfargs="$mfargs $arch_img"
   done
