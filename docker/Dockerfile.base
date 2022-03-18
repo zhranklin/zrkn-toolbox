@@ -10,7 +10,7 @@ echo deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-
 echo deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free >> /etc/apt/sources.list && \
 echo deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free >> /etc/apt/sources.list && \
 echo deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main contrib non-free >> /etc/apt/sources.list
-RUN apt-get update && apt-get install -y unzip wget nano vim expat expect net-tools less netcat lsof qrencode
+RUN apt-get update && apt-get install -y vim less qrencode && rm -rf /var/lib/apt/lists/* && apt-get clean
 RUN bash -c "http_proxy=$opt_proxy https_proxy=$opt_proxy wget https://github.com/mikefarah/yq/releases/download/v4.21.1/yq_linux_$TARGETARCH.tar.gz -O - | tar xz && mv yq_linux_$TARGETARCH /usr/bin/yq"
 RUN (echo "#!/usr/bin/env sh" && http_proxy=$opt_proxy https_proxy=$opt_proxy wget -O - https://github.com/lihaoyi/Ammonite/releases/download/2.5.2/3.1-2.5.2) > /usr/local/bin/amm && chmod +x /usr/local/bin/amm
 RUN mkdir -p /root/.ammonite

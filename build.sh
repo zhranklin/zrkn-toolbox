@@ -16,19 +16,19 @@ if test -z "${IGNORE_DIRTY}" && test -n "$(git status -s --porcelain)"; then
 fi
 
 # dockerfile=Dockerfile.base
-# pairs="v0.0.2-base,openjdk:17.0.2-buster v0.0.2-base-java8,openjdk:8u312"
+# pairs="v0.0.3-base,openjdk:17.0.2-buster v0.0.3-base-java8,openjdk:8u312 v0.0.3-base-ffmpeg,zhranklin/toolbox:jdk17-with-ffmpeg"
 dockerfile=Dockerfile
-pairs="$TAG,zhranklin/toolbox:v0.0.2-base $TAG-java8,zhranklin/toolbox:v0.0.2-base-java8 $TAG-tomcat,zhranklin/toolbox:v0.0.1-base-tomcat"
+pairs="$TAG,zhranklin/toolbox:v0.0.3-base $TAG-java8,zhranklin/toolbox:v0.0.3-base-java8 $TAG-ffmpeg,zhranklin/toolbox:v0.0.3-base-ffmpeg $TAG-tomcat,zhranklin/toolbox:v0.0.1-base-tomcat"
 
 for pair in $pairs; do
   arr=(${pair//,/ })
   tag=${arr[0]}
   from=${arr[1]}
-  image=zhranklin/toolbox
+  image=${image:-zhranklin/toolbox}
   mfargs="$image:$tag"
   for arch in amd64 arm64; do
     arch_img=$image:${tag}_linux_$arch
-    cat docker/$dockerfile|sed "1d; 2iFROM $from" | docker buildx build --build-arg proxy=$HTTP_PROXY --platform linux/$arch --load . -f - -t $arch_img
+    cat docker/$dockerfile|sed "1d; 2iFROM $from" | docker buildx build --build-arg proxy=$USE_PROXY --platform linux/$arch --load . -f - -t $arch_img
     docker push $arch_img
     mfargs="$mfargs $arch_img"
   done
