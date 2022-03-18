@@ -1,8 +1,8 @@
-import $ivy.`com.zhranklin:scala-tricks_2.13:0.2.0`
+import $ivy.`com.zhranklin:scala-tricks_2.13:0.2.1`
 import $ivy.`com.lihaoyi:ammonite-ops_2.13:2.4.0-23-76673f7f`
 import $ivy.`com.flipkart.zjsonpatch:zjsonpatch:0.4.11`
 import $ivy.`com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.11`
-import $ivy.`com.lihaoyi::os-lib:0.7.8`
+import $ivy.`com.lihaoyi::os-lib:0.8.0`
 import $ivy.`org.springframework:spring-core:5.1.7.RELEASE`
 import $ivy.`org.fusesource.jansi:jansi:2.2.0`
 import $ivy.`io.github.java-diff-utils:java-diff-utils:4.5`

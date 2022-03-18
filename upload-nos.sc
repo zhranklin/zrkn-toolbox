@@ -3,16 +3,9 @@ ARGS=""; for a in "$@"; do ARGS="$ARGS,$(printf '%s' "$a"|base64 -w 0)"; done; A
 !#
 val args = System.getenv("ARGS").split(",").toList.drop(1).map(a => String(java.util.Base64.getDecoder().decode(a)))
 
-import $ivy.`org.yaml:snakeyaml:1.17`
-import $ivy.`org.slf4j:slf4j-log4j12:1.7.25`
 import $ivy.`org.apache.httpcomponents:httpclient:4.5.2`
-import $ivy.`org.codehaus.jackson:jackson-core-asl:1.8.7`
-import $ivy.`log4j:log4j:1.2.17`
 import $ivy.`joda-time:joda-time:2.1`
 import $ivy.`org.slf4j:slf4j-api:1.7.25`
-import $ivy.`com.fasterxml.jackson.core:jackson-databind:2.9.6`
-import $ivy.`org.bouncycastle:bcprov-jdk15on:1.60`
-import $ivy.`org.apache.commons:commons-lang3:3.7`
 import $cp.files.`nos.jar`
 import com.netease.cloud.auth.{BasicCredentials, Credentials}
 import com.netease.cloud.services.nos.NosClient

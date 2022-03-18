@@ -3,11 +3,11 @@ ARGS=""; for a in "$@"; do ARGS="$ARGS,$(printf '%s' "$a"|base64 -w 0)"; done; A
 !#
 val args = System.getenv("ARGS").split(",").toList.drop(1).map(a => String(java.util.Base64.getDecoder().decode(a)))
 
-import $ivy.`com.zhranklin:scala-tricks_2.13:0.2.0`
+import $ivy.`com.zhranklin:scala-tricks_2.13:0.2.1`
 import $ivy.`com.lihaoyi:ammonite-ops_2.13:2.4.0-23-76673f7f`
 import $ivy.`com.flipkart.zjsonpatch:zjsonpatch:0.4.11`
 import $ivy.`com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.8.11`
-import $ivy.`com.lihaoyi::os-lib:0.7.8`
+import $ivy.`com.lihaoyi::os-lib:0.8.0`
 import $ivy.`org.springframework:spring-core:5.1.7.RELEASE`
 import $ivy.`org.fusesource.jansi:jansi:2.2.0`
 import $ivy.`io.github.java-diff-utils:java-diff-utils:4.5`
@@ -19,9 +19,6 @@ import $ivy.`io.circe::circe-core:0.14.1`
 import $ivy.`io.circe:circe-optics_2.13:0.14.1`
 import $ivy.`io.circe::circe-parser:0.14.1`
 import $ivy.`io.circe::circe-yaml:0.14.1`
-//import $ivy.`com.github.julien-truffaut::monocle-core:2.0.1`
-//import $ivy.`com.fasterxml.jackson.core:jackson-databind:2.10.3`
-//import $ivy.`com.fasterxml.jackson.core:jackson-core:2.10.3`
 
 import ammonite.ops.ShelloutException
 import com.fasterxml.jackson.databind.node.{ArrayNode, JsonNodeFactory, ObjectNode, TextNode}
