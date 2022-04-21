@@ -29,6 +29,7 @@ import com.github.difflib.text.DiffRowGenerator
 import io.circe.Json
 import zrkn.op._
 import org.springframework.util.AntPathMatcher
+import com.fasterxml.jackson.databind.node.NullNode
 
 import scala.jdk.CollectionConverters._
 //interp.preConfigureCompiler(ctx => ctx.setSetting(ctx.settings.language, List("experimental.fewerBraces")))
@@ -198,11 +199,16 @@ object KubeObj:
     import scala.util
     util.Try {
       val tree = new ObjectMapper(new YAMLFactory).readTree(yaml)
-      Option(tree.get("metadata")).flatMap(i => Option(i.get("annotations"))).foreach { i =>
+      Option(tree.get("metadata")).flatMap(i => Option(i.get("annotations"))).filter(_.isInstanceOf[ObjectNode]).foreach { i =>
         ignoredAnnotations.foreach(i.asInstanceOf[ObjectNode].remove)
       }
       treeizeNodes(tree)
-      val obj = io.circe.yaml.parser.parse(yaml).getOrElse(Json.Null)
+      val obj = io.circe.yaml.parser.parse(new ObjectMapper(new YAMLFactory).writeValueAsString(tree)) match {
+        case Left(value) =>
+          throw value.underlying
+        case Right(value) =>
+          value
+      }
       import io.circe.optics.JsonPath.root
       val name = root.metadata.name.string.getOption(obj).get
       val namespace = root.metadata.namespace.string.getOption(obj).getOrElse("")
