@@ -36,7 +36,8 @@ if (args(0) == "write") {
   val fileNamePrefix = args(1)
   val gzip = os.proc("gzip").spawn(stdin = os.Inherit)
   val base64 = os.proc("base64", "-w", "256").call(stdin = gzip.stdout).out.text()
-  val groups = base64.split("\n").toList.filter(_.nonEmpty).grouped(10)
+  val groups = base64.split("\n").toList.filter(_.nonEmpty).grouped(10).toList
+  //79, 407, 581, 679
   groups
     .zipWithIndex
     .map {
@@ -48,9 +49,10 @@ if (args(0) == "write") {
 } else if (args(0) == "read") {
   val videoFile = args(1)
   val time = System.currentTimeMillis() / 1000
-  val dir = os.root/"tmp"/s"qr-$time"
-  os.makeDir(dir)
-  os.proc("ffmpeg", "-i", videoFile, "-format", "image2", "-r", "10", dir/"df%03d.png").call(stdout = os.Inherit, stderr = os.Inherit)
+//  val dir = os.root/"tmp"/s"qr-$time"
+//  os.makeDir(dir)
+  val dir = os.root/"tmp"/"qr-1649420936"
+//  os.proc("ffmpeg", "-i", videoFile, "-format", "image2", "-r", "3", dir/"df-1-%05d.png").call(stdout = os.Inherit, stderr = os.Inherit)
   var totalOpt: Option[Int] = None
   val base64Parts = os.list(dir).filter(_.ext == "png")
     .flatMap { png =>
@@ -66,18 +68,23 @@ if (args(0) == "write") {
             i.toInt
         }
         println(s"Got text from QR Code: $i")
-        Some(i, lines.tail.mkString("\n"))
+        val text = lines.tail.mkString("\n")
+        os.write.over(dir/s"$i.txt", text)
+        Some(i, text)
       } else {
         None
       }
     }
-    .toMap
+    .toMap ++ (
+    os.list(dir).filter(_.ext == "txt")
+      .map(f => f.last.split("\\.")(0).toInt -> os.read(f))
+  )
   val total = totalOpt.getOrElse(base64Parts.keys.max)
   val missedParts = (0 until total).toList.diff(base64Parts.keys.toList)
   if (missedParts.nonEmpty) {
     println(s"Error: missed parts: ${missedParts.mkString(", ")}")
   } else {
-    val base64 = base64Parts.values.mkString("\n")
+    val base64 = (0 until total).map(i => base64Parts(i).mkString("\n"))
     val decodeP = os.proc("base64", "-d").spawn(stdin = base64)
     val outF = os.Path(videoFile)/os.up/"result.file"
     os.proc("gunzip").call(stdin = decodeP.stdout, stdout = outF)
