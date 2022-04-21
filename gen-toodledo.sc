@@ -61,7 +61,7 @@ case class GetToken(code: String) extends ApiRequest[String](uri = s"$URL_ACCOUN
     .body(s"grant_type=authorization_code&code=$code&vers=3&os=7")
   override def postExec(resp: String): Unit = {
     println(s"fetch token: $resp")
-    write.over(tokenFile, resp)
+    write.over(tokenFile, parseJson(resp).getOrElse(Json.Null).asObject.get.+:("time" := ""+System.currentTimeMillis()).asJson.toString())
   }
 }
 
@@ -70,7 +70,7 @@ case class RefreshToken(refreshToken: String) extends ApiRequest[String](uri = s
     .body(s"grant_type=refresh_token&refresh_token=$refreshToken&vers=3&os=7")
   override def postExec(resp: String): Unit = {
     println(s"refresh token: $resp")
-    write.over(tokenFile, parseJson(resp).getOrElse(Json.Null).asObject.get.+:("time" := ""+System.currentTimeMillis()).toString())
+    write.over(tokenFile, parseJson(resp).getOrElse(Json.Null).asObject.get.+:("time" := ""+System.currentTimeMillis()).asJson.toString())
   }
 }
 
