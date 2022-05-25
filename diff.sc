@@ -14,6 +14,7 @@ import $ivy.`io.github.java-diff-utils:java-diff-utils:4.5`
 import $ivy.`com.github.scopt::scopt:4.0.1`
 
 import java.io.File
+import scala.collection.mutable
 //以下仅为IDEA需要
 import $ivy.`io.circe::circe-core:0.14.1`
 import $ivy.`io.circe:circe-optics_2.13:0.14.1`
@@ -315,7 +316,11 @@ def doDiff(db: SourceDatabase, target: Path = root/"dev"/"stdin"): Unit =
                   setValue(result, s"$path$MARK_ADD_FIELD", value)
                 case "replace" => (n.get("fromValue"), value) match
                   case (from: TextNode, to: TextNode) if List(from,to).exists(_.textValue().contains("\n")) =>
-                    setValue(result, path, JsonNodeFactory.instance.textNode(generateDiffText(from, to)))
+                    val diffText = generateDiffText(from, to)
+//                    println(diffText.split("\n").map("###" + _).mkString("\n"))
+                    val processed = stripMultiLineDiff(processCrossLineDiff(diffText))
+//                    println(processed.split("\n").map("$$$" + _).mkString("\n"))
+                    setValue(result, path, JsonNodeFactory.instance.textNode(processed))
                   case (from, to)
                     if from.getNodeType == to.getNodeType && !Set(ARRAY, OBJECT, POJO).contains(from.getNodeType) =>
                     val rawdiff = generateDiffText(from, to)
@@ -393,6 +398,64 @@ def matchDefault(gvk: GVK, path: String, value: JsonNode, node: JsonNode): Boole
       expect.matches(node, path, value)
   }
 end matchDefault
+
+val txt = """###<MODIFY_LINE>    nsf.skiff.netease.com/namespace: {{ .DeploymentMeta.Namespace<ADD> <RESET>}}
+###    {{- end }}
+###<MODIFY_LINE>    <DELETE>prometheus<RESET><ADD>feature<RESET>.<DELETE>io/stats-job-name: "istio-mesh"
+###<MODIFY_LINE>    security.<RESET>istio.io/<DELETE>tlsMode: {{ index .ObjectMeta.Labels `security.istio.io/tlsMode` | default "istio"  | quote }}
+###<MODIFY_LINE>    service.istio.io/canonical<RESET><ADD>detailed<RESET>-<DELETE>name:<RESET><ADD>stats:<RESET> <DELETE>{{ index .ObjectMeta.Labels `service.istio.io/canonical-name` | default (index .ObjectMeta.Labels `app.kubernetes.io/name`) | default (index .ObjectMeta.Labels `app`) | default .DeploymentMeta.Name  | quote }}<RESET><ADD>"enabled"<RESET>
+###<MODIFY_LINE>    <DELETE>service.istio.io/canonical-revision: <RESET>{{<DELETE> index .ObjectMeta.Labels `service.istio.io/canonical<RESET>-<DELETE>revision`<RESET> <DELETE>|<RESET><ADD>end<RESET> <DELETE>default (index .ObjectMeta.Labels `app.kubernetes.io/version`) | default (index .ObjectMeta.Labels `version`) | default "latest"  | quote <RESET>}}
+"""
+
+val MARKER_PT = java.util.regex.Pattern.compile(s"(?s)(${c.TAG_ADD}|${c.TAG_DELETE}).*?${c.TAG_END}")
+// e.g.
+// Change:
+// <MODIFY_LINE>    ...<DELETE>io/stats-job-name: "istio-mesh"
+// <MODIFY_LINE>    security.<RESET>istio.io/....
+// To:
+// <MODIFY_LINE>    ...<DELETE>io/stats-job-name: "istio-mesh"<RESET>
+// <MODIFY_LINE>    <DELETE>security.<RESET>istio.io/....
+def processCrossLineDiff(diff: String): String =
+  val mth = MARKER_PT.matcher(diff)
+  val b = new StringBuffer()
+  while (mth.find()) {
+    val matched = mth.group()
+    val tagStart = mth.group(1)
+    val replacement =
+      if (matched.contains("\n"))
+        matched.replaceAll(s"\n(${c.MARK_MODIFY_LINE})?", s"${c.TAG_END}$$0$tagStart")
+      else matched
+    mth.appendReplacement(b, replacement)
+  }
+  mth.appendTail(b)
+  b.toString
+end processCrossLineDiff
+
+val CXT_LINES = 8
+def stripMultiLineDiff(diff: String): String =
+  import c._
+  val lines = diff.linesWithSeparators.toList
+  var hasSkipped = false
+  val resultLines = mutable.ListBuffer[String]()
+  val markedLines = lines.map(_.matches(s"(?s).*($MARK_DELETE_LINE|$MARK_MODIFY_LINE|$MARK_ADD_LINE).*"))
+  markedLines
+    .zipWithIndex
+    .map{case (b, i) => b || markedLines.slice(i-CXT_LINES, i+CXT_LINES).contains(true)}
+    .zip(lines)
+    .foreach{ case (b, l) =>
+      if (b) {
+        resultLines.addOne(l)
+        hasSkipped = false
+      }
+      else {
+        if (!hasSkipped) {
+          resultLines.addOne("<skipped...>")
+          hasSkipped = true
+        }
+      }
+    }
+  resultLines.mkString("")
+end stripMultiLineDiff
 
 case class Args(source: SourceDatabase = FromK8s, target: Path = root/"dev"/"stdin")
 import scopt.OParser
