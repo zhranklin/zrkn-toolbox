@@ -18,7 +18,8 @@ fi
 # dockerfile=Dockerfile.base
 # pairs="v0.0.3-base,openjdk:17.0.2-buster v0.0.3-base-java8,openjdk:8u312 v0.0.3-base-ffmpeg,zhranklin/toolbox:jdk17-with-ffmpeg"
 dockerfile=Dockerfile
-pairs="$TAG,zhranklin/toolbox:v0.0.3-base $TAG-java8,zhranklin/toolbox:v0.0.3-base-java8 $TAG-ffmpeg,zhranklin/toolbox:v0.0.3-base-ffmpeg $TAG-tomcat,zhranklin/toolbox:v0.0.1-base-tomcat"
+# ffmpeg: $TAG-ffmpeg,zhranklin/toolbox:v0.0.3-base-ffmpeg
+pairs="$TAG,zhranklin/toolbox:v0.0.3-base $TAG-java8,zhranklin/toolbox:v0.0.3-base-java8 $TAG-tomcat,zhranklin/toolbox:v0.0.1-base-tomcat"
 
 for pair in $pairs; do
   arr=(${pair//,/ })

@@ -449,7 +449,7 @@ def stripMultiLineDiff(diff: String): String =
       }
       else {
         if (!hasSkipped) {
-          resultLines.addOne("<skipped...>")
+          resultLines.addOne("<skipped...>\n")
           hasSkipped = true
         }
       }
