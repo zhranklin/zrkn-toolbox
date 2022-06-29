@@ -134,7 +134,7 @@ def main(code: String = "UNKNOWN"): Unit = {
   val str = read!(root/"dev"/"stdin")
   import RegexOpsContext._
   val getId: String => Option[String] = {
-    case rr"$id((Task|Bug|Requirement|Objective)-\d+) .*" => Some(id)
+    case rr"$id((Task|Bug|Requirement|Objective|Subtask)-\d+) .*" => Some(id)
     case _ => None
   }
   println(s"How to get code:\n$URL_ACCOUNT/authorize.php?response_type=code&client_id=zhranklin&state=YourState&scope=basic%20tasks%20write")
