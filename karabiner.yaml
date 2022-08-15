@@ -381,7 +381,7 @@ profiles:
           key_code: d
           modifiers: { "mandatory": [ "left_command", "$CAPSLOCK" ] }
         to:
-        - shell_command: open -a '/Users/zhangwu/Applications (Parallels)/{a46728de-c663-450f-9acb-b9a1da0b61d9} Applications.localized/MindMaster.app'
+        - shell_command: open -a '/Users/zhangwu/Applications (Parallels)/{32787d11-a60f-4f7c-9494-ad795160f583} Applications.localized/MindMaster.app'
         type: basic
     - description: Hyper Bash Control
       manipulators:
@@ -433,7 +433,7 @@ profiles:
           key_code: e
           modifiers: { "mandatory": [ "left_command", "$CAPSLOCK" ] }
         to:
-        - shell_command: open -a '/Users/zhangwu/Applications (Parallels)/{a46728de-c663-450f-9acb-b9a1da0b61d9} Applications.localized/印象笔记.app'
+        - shell_command: open -a '/Users/zhangwu/Applications (Parallels)/{32787d11-a60f-4f7c-9494-ad795160f583} Applications.localized/印象笔记.app'
         type: basic
       - from:
           key_code: e
