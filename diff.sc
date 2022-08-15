@@ -36,6 +36,9 @@ import scala.jdk.CollectionConverters._
 //interp.preConfigureCompiler(ctx => ctx.setSetting(ctx.settings.language, List("experimental.fewerBraces")))
 
 object c:
+  extension (s: String)
+    def unescapePath: String = s.replaceAll("~0", "~").replaceAll("~1", "/")
+
   import org.fusesource.jansi.Ansi.{Color, ansi}
   import org.fusesource.jansi.Ansi.Attribute._
   val MARK_DELETE_LINE = "<DELETE_LINE>"
@@ -52,6 +55,7 @@ object c:
   val MINUS = ansi().render("@|red -|@").toString
   val PLUS = ansi().render("@|green +|@").toString
   val TILDE = ansi().render("@|yellow ~|@").toString
+import c.unescapePath
 
 val jsonMapper = new ObjectMapper()
 val pathMatcher = new AntPathMatcher()
@@ -375,12 +379,12 @@ def setValue(obj: ObjectNode, path: String, value: JsonNode): Unit =
   var cur = obj
   path.split("/").dropRight(1).drop(1)
     .foreach{ pp =>
-      val p = pp.replaceAll("~1", "/")
+      val p = pp.unescapePath
       if (cur.get(p) == null)
         cur.put(p, JsonNodeFactory.instance.objectNode())
       cur = cur.get(p).asInstanceOf[ObjectNode]
     }
-  cur.put(path.split("/").last, value)
+  cur.put(path.split("/").last.unescapePath, value)
 end setValue
 
 def pathMatches(patterns: List[String], path: String): Boolean =
