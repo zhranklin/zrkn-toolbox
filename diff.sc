@@ -31,6 +31,7 @@ import io.circe.Json
 import zrkn.op._
 import org.springframework.util.AntPathMatcher
 import com.fasterxml.jackson.databind.node.NullNode
+import java.util.regex.Matcher
 
 import scala.jdk.CollectionConverters._
 //interp.preConfigureCompiler(ctx => ctx.setSetting(ctx.settings.language, List("experimental.fewerBraces")))
@@ -428,7 +429,7 @@ def processCrossLineDiff(diff: String): String =
     val replacement =
       if (matched.contains("\n"))
         matched.replaceAll(s"\n(${c.MARK_MODIFY_LINE})?", s"${c.TAG_END}$$0$tagStart")
-      else matched
+      else Matcher.quoteReplacement(matched)
     mth.appendReplacement(b, replacement)
   }
   mth.appendTail(b)
