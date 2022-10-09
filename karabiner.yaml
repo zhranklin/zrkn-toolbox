@@ -2,6 +2,7 @@
 X=\",\ \"; cat $0 | sed "1,3d;s/\$CAPSLOCK/right_command${X}right_control${X}right_shift${X}right_option/g" | yq ".|to_json" > /Users/zhangwu/.config/karabiner/karabiner.json
 exit
 global:
+  unsafe_ui: false
   check_for_updates_on_startup: true
   show_in_menu_bar: false
   show_profile_name_in_menu_bar: false
@@ -458,7 +459,7 @@ profiles:
           key_code: t
           modifiers: { "mandatory": [ "left_command", "$CAPSLOCK" ] }
         to:
-        - shell_command: open -a 'Bear'
+        - shell_command: open -a 'Stickies'
         type: basic
       - from:
           key_code: x
@@ -838,6 +839,7 @@ profiles:
       vendor_id: 2652
     ignore: false
     manipulate_caps_lock_led: false
+    treat_as_built_in_keyboard: false
     simple_modifications:
     - from:
         key_code: left_command
@@ -860,6 +862,7 @@ profiles:
       vendor_id: 12815
     ignore: false
     manipulate_caps_lock_led: true
+    treat_as_built_in_keyboard: false
     simple_modifications:
     - from:
         key_code: left_command
