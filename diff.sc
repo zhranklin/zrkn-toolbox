@@ -50,7 +50,7 @@ object c:
   val TAG_END = "<RESET>"
   val MARK_DELETE_FIELD = "<DELETE_FIELD>"
   val MARK_ADD_FIELD = "<ADD_FIELD>"
-  val DELETE = ansi().fg(Color.RED).a(STRIKETHROUGH_ON).toString
+  val DELETE = ansi().fg(Color.RED).a(STRIKETHROUGH_ON).a(INTENSITY_BOLD).toString
   val ADD = ansi().fg(Color.GREEN).a(INTENSITY_BOLD).toString
   val RESET = ansi().reset().toString
   val MINUS = ansi().render("@|red -|@").toString
@@ -179,19 +179,21 @@ case class GVK(kind: String, name: String, namespace: String):
   override def toString = s"$kind/$name${if(namespace.isEmpty)""else s".$namespace"}"
 case class KubeObj(yaml: String, tree: JsonNode, obj: Json, gvk: GVK)
 
-trait Change:
-  def gvk: GVK
 trait Changes:
   def gvk: GVK
+  def sorting: String
+
 trait SourceDatabase:
   def get(gvk: GVK): Option[KubeObj]
 
-case class Add(gvk: GVK, path: String, value: JsonNode) extends Change
-case class Remove(gvk: GVK, path: String, value: JsonNode) extends Change
-case class Replace(gvk: GVK, path: String, from: JsonNode, to: JsonNode) extends Change
-case class NewResource(gvk: GVK) extends Change with Changes:
+case class NewResource(gvk: GVK) extends Changes:
   import c._
   override def toString = s"$ADD# New resource $gvk$RESET"
+  override def sorting = s"3$gvk"
+case class RemovedResource(gvk: GVK) extends Changes:
+  import c._
+  override def toString = s"$DELETE# Removed resource $gvk$RESET"
+  override def sorting = s"2$gvk"
 case class DiffResource(gvk: GVK, changes: ObjectNode) extends Changes:
   import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature._
   override def toString =
@@ -200,6 +202,7 @@ case class DiffResource(gvk: GVK, changes: ObjectNode) extends Changes:
       .enable(MINIMIZE_QUOTES)
     s"---\n# Differences in resource $gvk\n${new ObjectMapper(factory).writeValueAsString(changes)}"
   end toString
+  override def sorting = s"1$gvk"
 object KubeObj:
   def apply(yaml: String): Option[KubeObj] =
     import scala.util
@@ -295,10 +298,11 @@ def generateDiffText(from: JsonNode, to: JsonNode) =
 end generateDiffText
 
 def doDiff(db: SourceDatabase, target: Path = root/"dev"/"stdin"): Unit =
-  read(target).split("---")
+  val targetResources = read(target).split("---")
     .map(_.trim)
     .filter(_.nonEmpty)
     .flatMap(KubeObj.apply)
+  targetResources
     .flatMap { target =>
       db.get(target.gvk) match
         case None => Some(NewResource(target.gvk))
@@ -320,11 +324,11 @@ def doDiff(db: SourceDatabase, target: Path = root/"dev"/"stdin"): Unit =
                 case "add" =>
                   setValue(result, s"$path$MARK_ADD_FIELD", value)
                 case "replace" => (n.get("fromValue"), value) match
-                  case (from: TextNode, to: TextNode) if List(from,to).exists(_.textValue().contains("\n")) =>
+                  case (from: TextNode, to: TextNode) if List(from, to).exists(_.textValue().contains("\n")) =>
                     val diffText = generateDiffText(from, to)
-//                    println(diffText.split("\n").map("###" + _).mkString("\n"))
+                    //                    println(diffText.split("\n").map("###" + _).mkString("\n"))
                     val processed = stripMultiLineDiff(processCrossLineDiff(diffText))
-//                    println(processed.split("\n").map("$$$" + _).mkString("\n"))
+                    //                    println(processed.split("\n").map("$$$" + _).mkString("\n"))
                     setValue(result, path, JsonNodeFactory.instance.textNode(processed))
                   case (from, to)
                     if from.getNodeType == to.getNodeType && !Set(ARRAY, OBJECT, POJO).contains(from.getNodeType) =>
@@ -341,7 +345,15 @@ def doDiff(db: SourceDatabase, target: Path = root/"dev"/"stdin"): Unit =
           Some(result).filterNot(_.isEmpty()).map(DiffResource(target.gvk, _))
     }
     .toList
-    .sortBy(_.toString)
+    .++ {
+      db match {
+        case ydb: FromYaml =>
+          val value: Set[GVK] = ydb.sourceObjs.keySet.toSet.diff(targetResources.map(_.gvk).toSet)
+          value.map(RemovedResource.apply)
+        case _ => Nil
+      }
+    }
+    .sortBy(_.sorting)
     .foreach { res =>
       import c._
       var indent = 0
