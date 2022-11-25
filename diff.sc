@@ -1,5 +1,5 @@
 #!/bin/bash
-ARGS=""; for a in "$@"; do ARGS="$ARGS,$(printf '%s' "$a"|base64 -w 0)"; done; ARGS="$ARGS" exec amm "$0";
+ARGS=""; for a in "$@"; do ARGS="$ARGS,$(printf '%s' "$a"|base64 -w 0)"; done; ARGS="$ARGS" exec amm3 "$0";
 !#
 val args = System.getenv("ARGS").split(",").toList.drop(1).map(a => String(java.util.Base64.getDecoder().decode(a)))
 
@@ -22,7 +22,7 @@ import $ivy.`io.circe::circe-parser:0.14.1`
 import $ivy.`io.circe::circe-yaml:0.14.1`
 
 import ammonite.ops.ShelloutException
-import com.fasterxml.jackson.databind.node.{ArrayNode, JsonNodeFactory, ObjectNode, TextNode}
+import com.fasterxml.jackson.databind.node.{ArrayNode, JsonNodeFactory, ObjectNode, TextNode, MissingNode}
 import com.fasterxml.jackson.databind.{JsonNode, ObjectMapper}
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.flipkart.zjsonpatch.{DiffFlags, JsonDiff}
@@ -175,36 +175,38 @@ val defaults = List(
   "MutatingWebhookConfiguration" -> "/webhooks/*/timeoutSeconds" -> exact(30),
 )
 
-case class GVK(kind: String, name: String, namespace: String):
-  override def toString = s"$kind/$name${if(namespace.isEmpty)""else s".$namespace"}"
-case class KubeObj(yaml: String, tree: JsonNode, obj: Json, gvk: GVK)
+case class DocID(id: String, `tpe`: String = "Yaml Doc"):
+  override def toString: String = s"$tpe $id"
+class GVK(val kind: String, val name: String, val namespace: String) extends DocID(s"$kind/$name${if(namespace.isEmpty)""else s".$namespace"}", "K8s Resource")
+case class YamlDoc(yaml: String, tree: JsonNode, obj: Json, id: DocID)
 
 trait Changes:
-  def gvk: GVK
   def sorting: String
 
 trait SourceDatabase:
-  def get(gvk: GVK): Option[KubeObj]
+  def get(id: DocID): Option[YamlDoc]
 
-case class NewResource(gvk: GVK) extends Changes:
-  import c._
-  override def toString = s"$ADD# New resource $gvk$RESET"
-  override def sorting = s"3$gvk"
-case class RemovedResource(gvk: GVK) extends Changes:
-  import c._
-  override def toString = s"$DELETE# Removed resource $gvk$RESET"
-  override def sorting = s"2$gvk"
-case class DiffResource(gvk: GVK, changes: ObjectNode) extends Changes:
+case class NewResource(doc: YamlDoc, show: Boolean) extends Changes:
+  import c._, doc.id
+  override def toString = s"---\n$ADD# New $id${if (show) s"\n${doc.yaml}" else ""}$RESET"
+  override def sorting = s"3$id"
+case class RemovedResource(doc: YamlDoc, show: Boolean) extends Changes:
+  import c._, doc.id
+  override def toString = s"---\n$DELETE# Removed $id${if (show) s"\n${doc.yaml}" else ""}$RESET"
+  override def sorting = s"2$id"
+case class DiffResource(id: DocID, changes: ObjectNode) extends Changes:
   import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator.Feature._
   override def toString =
     val factory = new YAMLFactory()
       .disable(WRITE_DOC_START_MARKER)
       .enable(MINIMIZE_QUOTES)
-    s"---\n# Differences in resource $gvk\n${new ObjectMapper(factory).writeValueAsString(changes)}"
+    s"---\n# Diffs in $id\n${new ObjectMapper(factory).writeValueAsString(changes)}"
   end toString
-  override def sorting = s"1$gvk"
-object KubeObj:
-  def apply(yaml: String): Option[KubeObj] =
+  override def sorting = s"1$id"
+object YamlDoc:
+  def k8sResource(yaml: String) = apply(yaml, true, None)
+  def apply(yaml: String, k8s: Boolean, index: Option[Int]): Option[YamlDoc] =
+    if (yaml.trim.isEmpty) return None
     import scala.util
     util.Try {
       val tree = new ObjectMapper(new YAMLFactory).readTree(yaml)
@@ -218,40 +220,48 @@ object KubeObj:
         case Right(value) =>
           value
       }
-      import io.circe.optics.JsonPath.root
-      val name = root.metadata.name.string.getOption(obj).get
-      val namespace = root.metadata.namespace.string.getOption(obj).getOrElse("")
-      val kind = root.kind.string.getOption(obj).get
-      KubeObj(yaml, tree, obj, GVK(kind, name, namespace))
-    }.recoverWith[KubeObj] { t =>
-      io.circe.yaml.parser.parse(yaml) match
-        case Right(Json.False) =>
-        case _ =>
-          println(yaml)
-          t.printStackTrace();
-      util.Failure(t)
-    }.toOption
+      val id = if (k8s) {
+        import io.circe.optics.JsonPath.root
+        val name = root.metadata.name.string.getOption(obj).get
+        val namespace = root.metadata.namespace.string.getOption(obj).getOrElse("")
+        val kind = root.kind.string.getOption(obj).get
+        new GVK(kind, name, namespace)
+      } else DocID(index.get.toString)
+      YamlDoc(yaml, tree, obj, id)
+    } .recoverWith[YamlDoc] { t =>
+        io.circe.yaml.parser.parse(yaml) match
+          case Right(Json.False) =>
+          case _ =>
+            println(yaml)
+            t.printStackTrace();
+        util.Failure(t)
+      }.toOption
+//      .filterNot(_.isInstanceOf[NullNode])
+      .filterNot(_.tree.isInstanceOf[MissingNode])
   end apply
 
 object FromK8s extends SourceDatabase:
-  def get(gvk: GVK): Option[KubeObj] =
+  def get(id: DocID): Option[YamlDoc] = id match {
+    case gvk: GVK => get(gvk)
+    case _ => None
+  }
+  def get(gvk: GVK): Option[YamlDoc] =
     import gvk._
     try
-      KubeObj(ammonite.ops.%%("bash", "-c", s"kubectl get $kind -oyaml $name ${if (namespace.isEmpty) "" else s"-n $namespace"}")(wd).out.string)
+      YamlDoc.k8sResource(ammonite.ops.%%("bash", "-c", s"kubectl get $kind -oyaml $name ${if (namespace.isEmpty) "" else s"-n $namespace"}")(wd).out.string)
     catch
       case e: ShelloutException if e.result.err.string.contains("(NotFound)")
         || e.result.err.string.contains("doesn't have a resource type") => None
   end get
 
-class FromYaml(src: String) extends SourceDatabase:
-  val sourceObjs = src.split("---")
-    .map(_.trim)
-    .filter(_.nonEmpty)
-    .flatMap(KubeObj.apply)
-    .groupBy(_.gvk)
+class FromYaml(src: String, isK8s: Boolean) extends SourceDatabase:
+  lazy val sourceObjs = src.split("(\n|^)---\\s*(\n|$)")
+    .zipWithIndex
+    .flatMap{ case (y, i) => YamlDoc.apply(y, isK8s, Some(i))}
+    .groupBy(_.id)
     .view
     .mapValues(_.head)
-  def get(gvk: GVK) = sourceObjs.get(gvk)
+  def get(id: DocID) = sourceObjs.get(id)
 
 def treeizeNodes(node: JsonNode): Unit =
   node match
@@ -297,15 +307,22 @@ def generateDiffText(from: JsonNode, to: JsonNode) =
     .mkString("\n")
 end generateDiffText
 
-def doDiff(db: SourceDatabase, target: Path = root/"dev"/"stdin"): Unit =
-  val targetResources = read(target).split("---")
-    .map(_.trim)
-    .filter(_.nonEmpty)
-    .flatMap(KubeObj.apply)
-  targetResources
+def shouldIgnore(target: YamlDoc, path: String, value: JsonNode): Boolean = {
+  if (target.id.isInstanceOf[GVK])
+    false
+  else {
+    val ignored = path == "/metadata/annotations" && value.isInstanceOf[ObjectNode] &&
+      value.asInstanceOf[ObjectNode].fieldNames().asScala.toList.forall(ignoredAnnotations.contains)
+    ignored || matchDefault(target.id.asInstanceOf[GVK], path, value, target.tree)
+  }
+}
+def doDiff(config: Args): Unit =
+  val targetDocs = new FromYaml(read(config.target), config.isK8s).sourceObjs.values
+//  println(targetDocs.toList)
+  targetDocs
     .flatMap { target =>
-      db.get(target.gvk) match
-        case None => Some(NewResource(target.gvk))
+      config.source.get(target.id) match
+        case None => Some(NewResource(target, config.showNew))
         case Some(source) =>
           val result = JsonNodeFactory.instance.objectNode()
           JsonDiff.asJson(source.tree, target.tree, DIFF_FLAGS)
@@ -317,9 +334,7 @@ def doDiff(db: SourceDatabase, target: Path = root/"dev"/"stdin"): Unit =
               import com.fasterxml.jackson.databind.node.JsonNodeType._
               n.get("op").asText() match
                 case "remove" =>
-                  val ignored = path == "/metadata/annotations" && value.isInstanceOf[ObjectNode] &&
-                    value.asInstanceOf[ObjectNode].fieldNames().asScala.toList.forall(ignoredAnnotations.contains)
-                  if (!ignored && !matchDefault(target.gvk, path, value, target.tree))
+                  if (shouldIgnore(target, path, value))
                     setValue(result, s"$path$MARK_DELETE_FIELD", value)
                 case "add" =>
                   setValue(result, s"$path$MARK_ADD_FIELD", value)
@@ -342,14 +357,17 @@ def doDiff(db: SourceDatabase, target: Path = root/"dev"/"stdin"): Unit =
                     setValue(result, s"$path$MARK_DELETE_FIELD", from)
                     setValue(result, s"$path$MARK_ADD_FIELD", to)
             }
-          Some(result).filterNot(_.isEmpty()).map(DiffResource(target.gvk, _))
+          Some(result).filterNot(_.isEmpty()).map(DiffResource(target.id, _))
     }
     .toList
     .++ {
-      db match {
+      config.source match {
         case ydb: FromYaml =>
-          val value: Set[GVK] = ydb.sourceObjs.keySet.toSet.diff(targetResources.map(_.gvk).toSet)
-          value.map(RemovedResource.apply)
+          ydb.sourceObjs
+            .keySet.toSet
+            .diff(targetDocs.map(_.id).toSet)
+            .map(ydb.sourceObjs.apply)
+            .map(doc => RemovedResource(doc, config.showRemoved))
         case _ => Nil
       }
     }
@@ -474,7 +492,7 @@ def stripMultiLineDiff(diff: String): String =
   resultLines.mkString("")
 end stripMultiLineDiff
 
-case class Args(source: SourceDatabase = FromK8s, target: Path = root/"dev"/"stdin")
+case class Args(source: SourceDatabase = FromK8s, target: Path = root/"dev"/"stdin", isK8s: Boolean = false, showNew: Boolean = false, showRemoved: Boolean = false)
 import scopt.OParser
 val builder = OParser.builder[Args]
 val parser1 = {
@@ -482,17 +500,37 @@ val parser1 = {
   OParser.sequence(
     programName("diff"),
     head("diff"),
+    help('h', "help")
+      .text("Show this help."),
+    opt[Unit]("k8s")
+      .text("Treat yaml docs as kubernetes resources.")
+      .optional()
+      .action((_, a) => a.copy(isK8s = true)),
+    opt[Unit]("show-new")
+      .text("Show complete yaml text of new yaml docs.")
+      .optional()
+      .action((_, a) => a.copy(showNew = true)),
+    opt[Unit]("show-removed")
+      .text("Show complete yaml text of removed yaml docs.")
+      .optional()
+      .action((_, a) => a.copy(showRemoved = true)),
     arg[String]("source")
+      .text("Source yaml file, specify \"<k8s>\" to fetch resource from kubernetes cluster, and default to be <k8s>.")
       .optional()
-      .action((f, a) => a.copy(source = new FromYaml(read(oPath(f))))),
+      .action((f, a) => a.copy(source = new FromYaml(read(oPath(f)), a.isK8s))),
     arg[String]("target")
+      .text("Target yaml file, default to be stdin.")
       .optional()
-      .action((f, a) => a.copy(target = oPath(f)))
+      .action((f, a) => a.copy(target = if (f.equals("-")) root/"dev"/"stdin" else oPath(f))),
+    checkConfig{
+      case Args(_: FromK8s.type, _, false, _, _) => failure("You should add --k8s option when the source is kubernetes cluster.")
+      case _ => success
+    }
   )
 }
 
 OParser.parse(parser1, args, Args()) match {
   case Some(config) =>
-    doDiff(config.source, config.target)
+    doDiff(config)
   case _ =>
 }
