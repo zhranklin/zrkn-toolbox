@@ -255,7 +255,7 @@ object FromK8s extends SourceDatabase:
         || e.result.err.string.contains("doesn't have a resource type") => None
   end get
 
-class FromYaml(src: String, isK8s: Boolean) extends SourceDatabase:
+class FromYaml(src: => String, isK8s: Boolean) extends SourceDatabase:
   lazy val sourceObjs = src.split("(\n|^)---\\s*(\n|$)")
     .zipWithIndex
     .flatMap{ case (y, i) => YamlDoc.apply(y, isK8s, Some(i))}
