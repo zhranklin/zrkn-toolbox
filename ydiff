@@ -208,7 +208,6 @@ object IgnoreRulesParser extends RegexParsers {
       println(msg)
       throw new Exception
   def parseAndMerge(s: Seq[String]): IgnoreRules =
-    println("asdf")
     val result: mutable.Map[String, List[(String, ValueMatcher)]] = mutable.Map()
     s.map(parse0).foreach { i =>
       i.foreach {

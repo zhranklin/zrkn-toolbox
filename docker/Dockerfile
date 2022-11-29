@@ -7,4 +7,5 @@ COPY --from=cache /root/.ammonite /root/.ammonite
 COPY --from=cache /root/.cache /root/.cache
 ADD files /root/files
 COPY *.sc /root/
+COPY ydiff /usr/local/bin
 ENTRYPOINT []
