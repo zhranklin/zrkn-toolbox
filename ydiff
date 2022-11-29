@@ -339,13 +339,16 @@ def expandTextToYaml(node: JsonNode): Unit =
     case _ =>
 end expandTextToYaml
 
-def removeIgnoredFields(root: JsonNode, node: JsonNode, path: String, defaults: List[(String, ValueMatcher)]): Boolean =
+def removeIgnoredFields(root: JsonNode, node: JsonNode, path: String, defaults: List[(String, ValueMatcher)])(using args: Args): Boolean =
   val shouldIgnore = defaults.exists { case pt -> expect =>
     pathMatcher.`match`(pt, path) &&
       expect.matches(root, path, node)
   }
   node match
-    case _ if shouldIgnore => true
+    case _ if shouldIgnore =>
+      if (args.debug.ignore)
+        println(s"$path: $node")
+      true
     case node: ObjectNode =>
       node.fields().asScala
         .filter { kv =>
@@ -357,7 +360,20 @@ def removeIgnoredFields(root: JsonNode, node: JsonNode, path: String, defaults: 
           node.remove(key)
         }
       false
+    case node: ArrayNode =>
+      node.elements().asScala.toList.zipWithIndex
+        .filter { case (n, i) =>
+          removeIgnoredFields(root, n, s"$path/$i", defaults)
+        }
+        .map(_._2)
+        .reverse
+        .foreach { i =>
+          node.remove(i)
+        }
+      false
     case _ =>
+      if (args.debug.ignore)
+        println(s"$path: $node")
       false
 end removeIgnoredFields
 
@@ -387,7 +403,7 @@ def doDiff(using _args: Args): Unit =
   given args: Args = _args.copy(
     ignoreRules = IgnoreRulesParser.parseAndMerge(List(defaultIgnores).filterNot(_ => _args.f.noIgnore) ::: _args.extraIgnores ::: _args.extraIgnoreFiles.map(p => read(oPath(p))))
   )
-  if (args.debug.showIgnores)
+  if (args.debug.ignoreRules)
     println(args.ignoreRules.toString().replaceAll(", ", ",\n"))
   val targetDocs = new FromYaml(read(args.target), args.f.k8s).sourceObjs.values
   targetDocs
@@ -458,8 +474,8 @@ def doDiff(using _args: Args): Unit =
         else if (ind <= indent && line.trim.nonEmpty)
           indent = 0
           lineTemplate = " $1$2"
-        if (args.debug.beforeRender)
-          println(line + "<before render>")
+        if (args.debug.unrendered)
+          println(line + "<unrendered>")
         println {
           if (line.isEmpty) ""
           else if (lineTemplate == " $1$2") line
@@ -563,7 +579,8 @@ case class Args(source: SourceDatabase = FromK8s,
   val f: Flags = new Flags(flags)
 
 object Args:
-  def flag(f: String) = (_: Unit, a: Args) => a.copy(flags = a.flags.+(f))
+  def flag(f: String) = (_: Unit, a: Args) => a.copy(flags = a.flags.+(flagToToken(f)))
+  def flagToToken(f: String) = "-([a-z])".r.replaceSomeIn(f, m => Some(m.group(1).toUpperCase))
 
 import scopt.OParser
 val builder = OParser.builder[Args]
@@ -599,7 +616,7 @@ val parser1 = {
       .action((p, a) => a.copy(extraIgnoreFiles = a.extraIgnoreFiles.appended(p))),
     opt[String]('d', "debug")
       .hidden()
-      .action((d, a) => a.copy(debugFlags = a.debugFlags.+(d))),
+      .action((d, a) => a.copy(debugFlags = a.debugFlags.+(Args.flagToToken(d)))),
     arg[String]("source")
       .text("Source yaml file, specify \"<k8s>\" to fetch resource from kubernetes cluster, and default to be <k8s>.")
       .optional()
