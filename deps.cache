@@ -21,3 +21,4 @@ import $ivy.`org.slf4j:slf4j-api:1.7.25`
 import $ivy.`com.fasterxml.jackson.core:jackson-databind:2.9.6`
 import $ivy.`org.bouncycastle:bcprov-jdk15on:1.60`
 import $ivy.`org.apache.commons:commons-lang3:3.7`
+import $ivy.`org.scala-lang.modules::scala-parser-combinators:2.1.1`

@@ -1,7 +1,4 @@
-#!/bin/bash
-ARGS=""; for a in "$@"; do ARGS="$ARGS,$(printf '%s' "$a"|base64 -w 0)"; done; ARGS="$ARGS" exec amm3 "$0";
-!#
-val args = System.getenv("ARGS").split(",").toList.drop(1).map(a => String(java.util.Base64.getDecoder().decode(a)))
+#!/usr/bin/env amm3
 
 import $ivy.`com.zhranklin:scala-tricks_2.13:0.2.1`
 import $ivy.`com.lihaoyi:ammonite-ops_2.13:2.4.0-23-76673f7f`
@@ -12,9 +9,11 @@ import $ivy.`org.springframework:spring-core:5.1.7.RELEASE`
 import $ivy.`org.fusesource.jansi:jansi:2.2.0`
 import $ivy.`io.github.java-diff-utils:java-diff-utils:4.5`
 import $ivy.`com.github.scopt::scopt:4.0.1`
+import $ivy.`org.scala-lang.modules::scala-parser-combinators:2.1.1`
 
 import java.io.File
 import scala.collection.mutable
+import scala.collection.MapView
 //以下仅为IDEA需要
 import $ivy.`io.circe::circe-core:0.14.1`
 import $ivy.`io.circe:circe-optics_2.13:0.14.1`
@@ -96,6 +95,7 @@ trait ValueMatcher:
 def exact(v: Any) = new ValueMatcher:
   val expect = newNode(v)
   def matches(node: JsonNode, basePath: String, value: JsonNode) = jsonEquals(expect, value)
+  override def toString = s"exact($v)"
 
 def ref(path: String) = new ValueMatcher:
   def matches(node: JsonNode, basePath: String, value: JsonNode) =
@@ -107,74 +107,121 @@ def ref(path: String) = new ValueMatcher:
       .replaceAll("[^/]+/\\.\\./", "")
     getValue(node, p).exists(jsonEquals(_, value))
   end matches
+  override def toString = s"ref($path)"
 
 object alwaysTrue extends ValueMatcher:
   def matches(node: JsonNode, basePath: String, value: JsonNode) = true
+  override def toString = "always"
 
-val ignoredAnnotations = Set(
-  "deployment.kubernetes.io/revision",
-  "kubectl.kubernetes.io/last-applied-configuration",
-  "autoscaling.alpha.kubernetes.io/conditions",
-  "autoscaling.alpha.kubernetes.io/current-metrics",
-)
+val defaultIgnores = """
+* {
+  /**/checksum~1config-volume*: always
+  /apiVersion: always
+  /metadata/annotations/autoscaling.alpha.kubernetes.io/conditions: always
+  /metadata/annotations/autoscaling.alpha.kubernetes.io/current-metrics: always
+  /metadata/annotations/deployment.kubernetes.io/revision: always
+  /metadata/annotations/kubectl.kubernetes.io/last-applied-configuration: always
+  /metadata/creationTimestamp: always
+  /metadata/finalizers: always
+  /metadata/generation: always
+  /metadata/labels/release: always
+  /metadata/managedFields: always
+  /metadata/resourceVersion: always
+  /metadata/selfLink: always
+  /metadata/uid: always
+  /spec/selector/matchLabels/release: always
+  /spec/template/metadata/creationTimestamp: always
+  /spec/template/metadata/generation: always
+  /spec/template/metadata/labels/release: always
+  /spec/template/metadata/resourceVersion: always
+  /spec/template/metadata/selfLink: always
+  /spec/template/metadata/uid: always
+  /status: always
+  /webhooks/*/clientConfig/caBundle: always
+}
+Deployment {
+  /spec/progressDeadlineSeconds: exact(600)
+  /spec/revisionHistoryLimit: exact(10)
+  /spec/strategy/type: exact(RollingUpdate)
+  /spec/template/spec/serviceAccount: ref(../serviceAccountName)
+  /spec/template/spec/containers/*/imagePullPolicy: exact(IfNotPresent)
+  /spec/template/spec/containers/*/ports/*/protocol: exact(TCP)
+  /spec/template/spec/containers/*/*Probe/failureThreshold: exact(3)
+  /spec/template/spec/containers/*/*Probe/periodSeconds: exact(3)
+  /spec/template/spec/containers/*/*Probe/timeoutSeconds: exact(3)
+  /spec/template/spec/containers/*/*Probe/http*/scheme: exact(HTTP)
+  /spec/template/spec/containers/*/*/successThreshold: exact(1)
+  /spec/template/spec/containers/*/terminationMessagePath: exact(/dev/termination-log)
+  /spec/template/spec/containers/*/terminationMessagePolicy: exact(File)
+  /spec/template/spec/dnsPolicy: exact(ClusterFirst)
+  /spec/template/spec/restartPolicy: exact(Always)
+  /spec/template/spec/schedulerName: exact(default-scheduler)
+  /spec/template/spec/securityContext: exact([])
+  /spec/template/spec/terminationGracePeriodSeconds: exact(30)
+  /spec/template/spec/volumes/*/*/defaultMode: exact(420)
+  /metadata/annotations/deployment.kubernetes.io~1revision: always
+}
+Service {
+  /spec/clusterIP: always
+  /spec/ports/*/protocol: exact(TCP)
+  /spec/sessionAffinity: exact(None)
+  /spec/type: exact(ClusterIP)
+  /spec/ports/*/targetPort: ref(../port)
+}
+ServiceAccount {
+  /secrets: always
+}
+MutatingWebhookConfiguration {
+  /webhooks/*/clientConfig/service/port: exact(443)
+  /webhooks/*/matchPolicy: exact(Exact)
+  /webhooks/*/objectSelector: exact([])
+  /webhooks/*/reinvocationPolicy: exact(Never)
+  /webhooks/*/rules/*/scope: exact(*)
+  /webhooks/*/timeoutSeconds: exact(30)
+}
+"""
 
-val blackList = List(
-  "/spec/template/metadata/labels/release",
-  "/spec/selector/matchLabels/release",
-  "/**/checksum~1config-volume*",
-  "/metadata/labels/release",
-  //"/metadata/labels/*istio.io*",
-  "/metadata/managedFields",
-  "/metadata/finalizers",
-  "/metadata/creationTimestamp",
-  "/metadata/generation",
-  "/metadata/resourceVersion",
-  "/metadata/selfLink",
-  "/metadata/uid",
-  "/spec/template/metadata/creationTimestamp",
-  "/spec/template/metadata/generation",
-  "/spec/template/metadata/resourceVersion",
-  "/spec/template/metadata/selfLink",
-  "/spec/template/metadata/uid",
-  "/apiVersion",
-  "/status",
-  "/webhooks/*/clientConfig/caBundle",
-)
-
-val defaults = List(
-  "Deployment" -> "/spec/progressDeadlineSeconds" -> exact(600),
-  "Deployment" -> "/spec/revisionHistoryLimit" -> exact(10),
-  "Deployment" -> "/spec/strategy/type" -> exact("RollingUpdate"),
-  "Deployment" -> "/spec/template/spec/serviceAccount" -> ref("../serviceAccountName"),
-  "Deployment" -> "/spec/template/spec/containers/*/imagePullPolicy" -> exact("IfNotPresent"),
-  "Deployment" -> "/spec/template/spec/containers/*/ports/*/protocol" -> exact("TCP"),
-  "Deployment" -> "/spec/template/spec/containers/*/*Probe/failureThreshold" -> exact(3),
-  "Deployment" -> "/spec/template/spec/containers/*/*Probe/periodSeconds" -> exact(3),
-  "Deployment" -> "/spec/template/spec/containers/*/*Probe/timeoutSeconds" -> exact(3),
-  "Deployment" -> "/spec/template/spec/containers/*/*Probe/http*/scheme" -> exact("HTTP"),
-  "Deployment" -> "/spec/template/spec/containers/*/*/successThreshold" -> exact(1),
-  "Deployment" -> "/spec/template/spec/containers/*/terminationMessagePath" -> exact("/dev/termination-log"),
-  "Deployment" -> "/spec/template/spec/containers/*/terminationMessagePolicy" -> exact("File"),
-  "Deployment" -> "/spec/template/spec/dnsPolicy" -> exact("ClusterFirst"),
-  "Deployment" -> "/spec/template/spec/restartPolicy" -> exact("Always"),
-  "Deployment" -> "/spec/template/spec/schedulerName" -> exact("default-scheduler"),
-  "Deployment" -> "/spec/template/spec/securityContext" -> exact(new java.util.HashMap()),
-  "Deployment" -> "/spec/template/spec/terminationGracePeriodSeconds" -> exact(30),
-  "Deployment" -> "/spec/template/spec/volumes/*/*/defaultMode" -> exact(420),
-  "Deployment" -> "/metadata/annotations/deployment.kubernetes.io~1revision" -> alwaysTrue,
-  "Service" -> "/spec/clusterIP" -> alwaysTrue,
-  "Service" -> "/spec/ports/*/protocol" -> exact("TCP"),
-  "Service" -> "/spec/sessionAffinity" -> exact("None"),
-  "Service" -> "/spec/type" -> exact("ClusterIP"),
-  "Service" -> "/spec/ports/*/targetPort" -> ref("../port"),
-  "ServiceAccount" -> "/secrets" -> alwaysTrue,
-  "MutatingWebhookConfiguration" -> "/webhooks/*/clientConfig/service/port" -> exact(443),
-  "MutatingWebhookConfiguration" -> "/webhooks/*/matchPolicy" -> exact("Exact"),
-  "MutatingWebhookConfiguration" -> "/webhooks/*/objectSelector" -> exact(new java.util.ArrayList),
-  "MutatingWebhookConfiguration" -> "/webhooks/*/reinvocationPolicy" -> exact("Never"),
-  "MutatingWebhookConfiguration" -> "/webhooks/*/rules/*/scope" -> exact("*"),
-  "MutatingWebhookConfiguration" -> "/webhooks/*/timeoutSeconds" -> exact(30),
-)
+import scala.util.parsing.combinator._
+object IgnoreRulesParser extends RegexParsers {
+  def kind = """\w+""".r | "*"
+  def mtch: Parser[(String, ValueMatcher)] = """[^:\s]+""".r ~ ":" ~ matchValue ^^ { case p ~ _ ~ mv => p -> mv }
+  object m {
+    def always = "always" ^^ { _ => alwaysTrue}
+    def Exact = "exact" ~ "(" ~ (("""\d+""".r ^^ {_.toInt}) | ("""[]""" ^^ {_ => new java.util.HashMap()}) | ("""[^\s()]*""".r)) ~ ")" ^^ {
+      case _ ~ _ ~ param ~ _ => exact(param)
+    }
+    def Ref = "ref" ~ "(" ~ """[^\s()]+""".r ~ ")" ^^ {
+      case _ ~ _ ~ param ~ _ => ref(param)
+    }
+  }
+  def matchValue = m.always | m.Exact | m.Ref
+  def kindMatch = kind ~ "{" ~ rep(mtch) ~ "}" ^^ {
+    case k ~ _ ~ matches ~ _ => k -> matches
+  }
+  def total: Parser[IgnoreRules] = rep(kindMatch) ^^ (_.toMap)
+  def parse0(s: String): IgnoreRules = parseAll(total, s) match
+    case Success(matched, _) => matched
+    case Failure(msg, _) =>
+      println(msg)
+      throw new Exception
+    case Error(msg, _) =>
+      println(msg)
+      throw new Exception
+  def parseAndMerge(s: Seq[String]): IgnoreRules =
+    println("asdf")
+    val result: mutable.Map[String, List[(String, ValueMatcher)]] = mutable.Map()
+    s.map(parse0).foreach { i =>
+      i.foreach {
+        case (k, v) =>
+          if (result.contains(k))
+            result.update(k, result(k).++(v))
+          else result.put(k, v)
+      }
+    }
+    result.toMap
+  end parseAndMerge
+}
+type IgnoreRules = Map[String, List[(String, ValueMatcher)]]
 
 case class DocID(id: String, `tpe`: String = "Yaml Doc"):
   override def toString: String = s"$tpe $id"
@@ -185,7 +232,7 @@ trait Changes:
   def sorting: String
 
 trait SourceDatabase:
-  def get(id: DocID): Option[YamlDoc]
+  def get(id: DocID)(using args: Args): Option[YamlDoc]
 
 case class NewResource(doc: YamlDoc, show: Boolean) extends Changes:
   import c._, doc.id
@@ -205,16 +252,18 @@ case class DiffResource(id: DocID, changes: ObjectNode) extends Changes:
   end toString
   override def sorting = s"1$id"
 object YamlDoc:
-  def k8sResource(yaml: String) = apply(yaml, true, None)
-  def apply(yaml: String, k8s: Boolean, index: Option[Int]): Option[YamlDoc] =
+  def k8sResource(yaml: String)(using args: Args) = apply(yaml, true, None)
+  def apply(yaml: String, k8s: Boolean, index: Option[Int])(using args: Args): Option[YamlDoc] =
     if (yaml.trim.isEmpty) return None
     import scala.util
     util.Try {
       val tree = new ObjectMapper(new YAMLFactory).readTree(yaml)
-      Option(tree.get("metadata")).flatMap(i => Option(i.get("annotations"))).filter(_.isInstanceOf[ObjectNode]).foreach { i =>
-        ignoredAnnotations.foreach(i.asInstanceOf[ObjectNode].remove)
+      if (args.f.k8s) {
+        val kind = tree.get("kind").asText()
+        removeIgnoredFields(tree, tree, "", args.ignoreRules.getOrElse(kind, Nil) ::: args.ignoreRules.getOrElse("*", Nil))
       }
-      treeizeNodes(tree)
+      if (args.f.expandText)
+        expandTextToYaml(tree)
       val obj = io.circe.yaml.parser.parse(new ObjectMapper(new YAMLFactory).writeValueAsString(tree)) match {
         case Left(value) =>
           throw value.underlying
@@ -242,11 +291,11 @@ object YamlDoc:
   end apply
 
 object FromK8s extends SourceDatabase:
-  def get(id: DocID): Option[YamlDoc] = id match {
+  def get(id: DocID)(using args: Args): Option[YamlDoc] = id match {
     case gvk: GVK => get(gvk)
     case _ => None
   }
-  def get(gvk: GVK): Option[YamlDoc] =
+  def get(gvk: GVK)(using args: Args): Option[YamlDoc] =
     import gvk._
     try
       YamlDoc.k8sResource(ammonite.ops.%%("bash", "-c", s"kubectl get $kind -oyaml $name ${if (namespace.isEmpty) "" else s"-n $namespace"}")(wd).out.string)
@@ -256,15 +305,19 @@ object FromK8s extends SourceDatabase:
   end get
 
 class FromYaml(src: => String, isK8s: Boolean) extends SourceDatabase:
-  lazy val sourceObjs = src.split("(\n|^)---\\s*(\n|$)")
-    .zipWithIndex
-    .flatMap{ case (y, i) => YamlDoc.apply(y, isK8s, Some(i))}
-    .groupBy(_.id)
-    .view
-    .mapValues(_.head)
-  def get(id: DocID) = sourceObjs.get(id)
+  var _sobj: MapView[DocID, YamlDoc] = _
+  def sourceObjs(using args: Args) =
+    if (_sobj == null)
+      _sobj = src.split("(\n|^)---\\s*(\n|$)")
+        .zipWithIndex
+        .flatMap{ case (y, i) => YamlDoc.apply(y, isK8s, Some(i))}
+        .groupBy(_.id)
+        .view
+        .mapValues(_.head)
+    _sobj
+  def get(id: DocID)(using args: Args) = sourceObjs.get(id)
 
-def treeizeNodes(node: JsonNode): Unit =
+def expandTextToYaml(node: JsonNode): Unit =
   node match
     case node: ObjectNode =>
       node.fields().asScala
@@ -277,7 +330,7 @@ def treeizeNodes(node: JsonNode): Unit =
                   (kv.getKey, new ObjectMapper(new YAMLFactory).readTree(v.textValue()))
                 }
             case v: ObjectNode =>
-              treeizeNodes(v)
+              expandTextToYaml(v)
               None
             case _ => None
         }
@@ -285,7 +338,29 @@ def treeizeNodes(node: JsonNode): Unit =
           node.put(k, v)
         }
     case _ =>
-end treeizeNodes
+end expandTextToYaml
+
+def removeIgnoredFields(root: JsonNode, node: JsonNode, path: String, defaults: List[(String, ValueMatcher)]): Boolean =
+  val shouldIgnore = defaults.exists { case pt -> expect =>
+    pathMatcher.`match`(pt, path) &&
+      expect.matches(root, path, node)
+  }
+  node match
+    case _ if shouldIgnore => true
+    case node: ObjectNode =>
+      node.fields().asScala
+        .filter { kv =>
+          removeIgnoredFields(root, kv.getValue, s"$path/${kv.getKey}", defaults)
+        }
+        .map(_.getKey)
+        .toList
+        .foreach { key =>
+          node.remove(key)
+        }
+      false
+    case _ =>
+      false
+end removeIgnoredFields
 
 import ammonite.ops._
 import DiffFlags._
@@ -308,22 +383,18 @@ def generateDiffText(from: JsonNode, to: JsonNode) =
     .mkString("\n")
 end generateDiffText
 
-def shouldIgnore(target: YamlDoc, path: String, value: JsonNode): Boolean = {
-  if (!target.id.isInstanceOf[GVK])
-    false
-  else {
-    val ignored = path == "/metadata/annotations" && value.isInstanceOf[ObjectNode] &&
-      value.asInstanceOf[ObjectNode].fieldNames().asScala.toList.forall(ignoredAnnotations.contains)
-    ignored || matchDefault(target.id.asInstanceOf[GVK], path, value, target.tree)
-  }
-}
-def doDiff(config: Args): Unit =
-  val targetDocs = new FromYaml(read(config.target), config.isK8s).sourceObjs.values
-//  println(targetDocs.toList)
+def doDiff(using _args: Args): Unit =
+  println("analyzing...")
+  given args: Args = _args.copy(
+    ignoreRules = IgnoreRulesParser.parseAndMerge(List(defaultIgnores).filterNot(_ => _args.f.noIgnore) ::: _args.extraIgnores ::: _args.extraIgnoreFiles.map(p => read(oPath(p))))
+  )
+  if (args.debug.showIgnores)
+    println(args.ignoreRules.toString().replaceAll(", ", ",\n"))
+  val targetDocs = new FromYaml(read(args.target), args.f.k8s).sourceObjs.values
   targetDocs
     .flatMap { target =>
-      config.source.get(target.id) match
-        case None => Some(NewResource(target, config.showNew))
+      args.source.get(target.id) match
+        case None => Some(NewResource(target, args.f.showNew))
         case Some(source) =>
           val result = JsonNodeFactory.instance.objectNode()
           JsonDiff.asJson(source.tree, target.tree, DIFF_FLAGS)
@@ -335,7 +406,7 @@ def doDiff(config: Args): Unit =
               import com.fasterxml.jackson.databind.node.JsonNodeType._
               n.get("op").asText() match
                 case "remove" =>
-                  if (shouldIgnore(target, path, value))
+//                  if (!shouldIgnore(target, path, value))
                     setValue(result, s"$path$MARK_DELETE_FIELD", value)
                 case "add" =>
                   setValue(result, s"$path$MARK_ADD_FIELD", value)
@@ -362,13 +433,13 @@ def doDiff(config: Args): Unit =
     }
     .toList
     .++ {
-      config.source match {
+      args.source match {
         case ydb: FromYaml =>
           ydb.sourceObjs
             .keySet.toSet
             .diff(targetDocs.map(_.id).toSet)
             .map(ydb.sourceObjs.apply)
-            .map(doc => RemovedResource(doc, config.showRemoved))
+            .map(doc => RemovedResource(doc, args.f.showRemoved))
         case _ => Nil
       }
     }
@@ -388,7 +459,7 @@ def doDiff(config: Args): Unit =
         else if (ind <= indent && line.trim.nonEmpty)
           indent = 0
           lineTemplate = " $1$2"
-        if (config.debug.beforeRender)
+        if (args.debug.beforeRender)
           println(line + "<before render>")
         println {
           if (line.isEmpty) ""
@@ -409,7 +480,6 @@ def doDiff(config: Args): Unit =
 end doDiff
 
 def setValue(obj: ObjectNode, path: String, value: JsonNode): Unit =
-  if (pathMatches(blackList, path)) return
   var cur = obj
   path.split("/").dropRight(1).drop(1)
     .foreach{ pp =>
@@ -428,22 +498,6 @@ def pathMatches(patterns: List[String], path: String): Boolean =
   val ret = patterns.exists(pt => pathMatcher.`match`(pt, curPath))
   ret
 end pathMatches
-
-def matchDefault(gvk: GVK, path: String, value: JsonNode, node: JsonNode): Boolean =
-  defaults.exists { case kind -> pt -> expect =>
-    (kind == "*" || kind == gvk.kind) &&
-      pathMatcher.`match`(pt, path) &&
-      expect.matches(node, path, value)
-  }
-end matchDefault
-
-val txt = """###<MODIFY_LINE>    nsf.skiff.netease.com/namespace: {{ .DeploymentMeta.Namespace<ADD> <RESET>}}
-###    {{- end }}
-###<MODIFY_LINE>    <DELETE>prometheus<RESET><ADD>feature<RESET>.<DELETE>io/stats-job-name: "istio-mesh"
-###<MODIFY_LINE>    security.<RESET>istio.io/<DELETE>tlsMode: {{ index .ObjectMeta.Labels `security.istio.io/tlsMode` | default "istio"  | quote }}
-###<MODIFY_LINE>    service.istio.io/canonical<RESET><ADD>detailed<RESET>-<DELETE>name:<RESET><ADD>stats:<RESET> <DELETE>{{ index .ObjectMeta.Labels `service.istio.io/canonical-name` | default (index .ObjectMeta.Labels `app.kubernetes.io/name`) | default (index .ObjectMeta.Labels `app`) | default .DeploymentMeta.Name  | quote }}<RESET><ADD>"enabled"<RESET>
-###<MODIFY_LINE>    <DELETE>service.istio.io/canonical-revision: <RESET>{{<DELETE> index .ObjectMeta.Labels `service.istio.io/canonical<RESET>-<DELETE>revision`<RESET> <DELETE>|<RESET><ADD>end<RESET> <DELETE>default (index .ObjectMeta.Labels `app.kubernetes.io/version`) | default (index .ObjectMeta.Labels `version`) | default "latest"  | quote <RESET>}}
-"""
 
 val MARKER_PT = java.util.regex.Pattern.compile(s"(?s)(${c.TAG_ADD}|${c.TAG_DELETE}).*?${c.TAG_END}")
 // e.g.
@@ -495,53 +549,79 @@ def stripMultiLineDiff(diff: String): String =
   resultLines.mkString("")
 end stripMultiLineDiff
 
-case class Args(source: SourceDatabase = FromK8s, target: Path = root/"dev"/"stdin", isK8s: Boolean = false, showNew: Boolean = false, showRemoved: Boolean = false, debugFlags: Set[String] = Set()):
-  class Debug extends Dynamic {
-    def selectDynamic(name: String): Boolean = debugFlags.contains(name)
+case class Args(source: SourceDatabase = FromK8s,
+                target: Path = root/"dev"/"stdin",
+                extraIgnoreFiles: List[String] = Nil,
+                extraIgnores: List[String] = Nil,
+                flags: Set[String] = Set(),
+                debugFlags: Set[String] = Set(),
+                ignoreRules: IgnoreRules = Map(),
+               ):
+  class Flags(flags: Set[String]) extends Dynamic {
+    def selectDynamic(name: String): Boolean = flags.contains(name)
   }
-  val debug: Debug = new Debug
+  val debug: Flags = new Flags(debugFlags)
+  val f: Flags = new Flags(flags)
+
+object Args:
+  def flag(f: String) = (_: Unit, a: Args) => a.copy(flags = a.flags.+(f))
 
 import scopt.OParser
 val builder = OParser.builder[Args]
 val parser1 = {
   import builder.{arg, _}
   OParser.sequence(
-    programName("diff"),
-    head("diff"),
+    programName("ydiff.sc"),
+    head("Yaml Diff"),
     help('h', "help")
       .text("Show this help."),
     opt[Unit]("k8s")
       .text("Treat yaml docs as kubernetes resources.")
       .optional()
-      .action((_, a) => a.copy(isK8s = true)),
+      .action(Args.flag("k8s")),
     opt[Unit]("show-new")
       .text("Show complete yaml text of new yaml docs.")
       .optional()
-      .action((_, a) => a.copy(showNew = true)),
+      .action(Args.flag("showNew")),
     opt[Unit]("show-removed")
       .text("Show complete yaml text of removed yaml docs.")
       .optional()
-      .action((_, a) => a.copy(showRemoved = true)),
+      .action(Args.flag("showRemoved")),
+    opt[Unit]("no-ignore")
+      .text("Don't use default ignore list.(k8s only)")
+      .action(Args.flag("noIgnore")),
+    opt[String]("extra-ignore")
+      .text("File name to override default ignore")
+      .optional()
+      .action((i, a) => a.copy(extraIgnores = a.extraIgnores.appended(i))),
+    opt[String]("extra-ignore-file")
+      .text("File name to override default ignore")
+      .optional()
+      .action((p, a) => a.copy(extraIgnoreFiles = a.extraIgnoreFiles.appended(p))),
     opt[String]('d', "debug")
       .hidden()
       .action((d, a) => a.copy(debugFlags = a.debugFlags.+(d))),
     arg[String]("source")
       .text("Source yaml file, specify \"<k8s>\" to fetch resource from kubernetes cluster, and default to be <k8s>.")
       .optional()
-      .action((f, a) => a.copy(source = new FromYaml(read(oPath(f)), a.isK8s))),
+      .action((f, a) => a.copy(source = new FromYaml(read(oPath(f)), a.f.k8s))),
     arg[String]("target")
       .text("Target yaml file, default to be stdin.")
       .optional()
       .action((f, a) => a.copy(target = if (f.equals("-")) root/"dev"/"stdin" else oPath(f))),
     checkConfig{
-      case Args(_: FromK8s.type, _, false, _, _, _) => failure("You should add --k8s option when the source is kubernetes cluster.")
+      case a if a.source.isInstanceOf[FromK8s.type] && !a.f.k8s => failure("You should add --k8s option when the source is kubernetes cluster.")
       case _ => success
     }
   )
 }
 
-OParser.parse(parser1, args, Args()) match {
-  case Some(config) =>
-    doDiff(config)
-  case _ =>
-}
+import mainargs.{main, arg, ParserForMethods, Leftover}
+@main
+def main(rest: Leftover[String]) =
+  OParser.parse(parser1, rest.value, Args()) match {
+    case Some(config) =>
+      doDiff(using config)
+    case _ =>
+  }
+end main
