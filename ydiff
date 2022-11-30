@@ -230,9 +230,8 @@ object Models:
     end toString
     override def sorting = s"1$id"
 
-import Models._
-
 object YamlDocs:
+  import Models.{DocID, GVK, YamlDoc}
   trait SourceDatabase:
     def get(id: DocID)(using args: Args): Option[YamlDoc]
   object FromK8s extends SourceDatabase:
@@ -396,6 +395,7 @@ object YamlDiffer:
   end generateDiffText
 
   def doDiff(using _args: Args): Unit =
+    import Models.{NewResource, RemovedResource, DiffResource}
     println("analyzing...")
     given args: Args = _args.copy(
       ignoreRules = IgnoreRulesParser.parseAndMerge(List(defaultIgnores).filterNot(_ => _args.f.noIgnore) ::: _args.extraIgnores ::: _args.extraIgnoreFiles.map(p => read(oPath(p))))
