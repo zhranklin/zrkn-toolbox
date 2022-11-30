@@ -883,7 +883,7 @@ profiles:
     fn_function_keys: []
     identifiers:
       is_keyboard: true
-      is_pointing_device: true
+      is_pointing_device: false
       product_id: 591
       vendor_id: 1452
     ignore: false
