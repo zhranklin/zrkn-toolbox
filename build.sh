@@ -1,10 +1,10 @@
 #!/bin/bash
-BASE_VERSION=v0.1.5
+BASE_VERSION=v0.1.8
 TYPE=toolbox
-if [[ $1 == base ]]; then
-  TYPE=base
+if [[ $1 != "" ]]; then
+  TYPE=$1
 fi
-image=${image:-hub.c.163.com/qingzhou/amm-toolbox}
+image=${image:-harbor.cloud.netease.com/qztest/amm-toolbox}
 branch=$(git symbolic-ref --short -q HEAD)
 tag=$(git tag --points-at HEAD)
 if [ -z "$tag" ]; then
@@ -22,12 +22,15 @@ if test -z "${IGNORE_DIRTY}" && test -n "$(git status -s --porcelain)"; then
 fi
 
 CACHE_TAG=$image:$TAG-cache
-if [[ $TYPE == base ]]; then
+if [[ $TYPE == jdk-all ]]; then
+  dockerfile=Dockerfile.jdk-all
+  pairs="$TAG-jdk-all,"
+elif [[ $TYPE == base ]]; then
   dockerfile=Dockerfile.base
-  pairs="$TAG-base,openjdk:17.0.2-buster $TAG-base-java8,openjdk:8u342"
+  pairs="$TAG-base-jdk-all,zhranklin/toolbox:v0.1.8-jdk-all $TAG-base,openjdk:17.0.2-buster"
 else
   dockerfile=Dockerfile
-  pairs="$TAG,$image:$BASE_VERSION-base $TAG-java8,$image:$BASE_VERSION-base-java8"
+  pairs="$TAG-jdk-all,$image:$BASE_VERSION-base-jdk-all $TAG,$image:$BASE_VERSION-base"
   docker build . -t $CACHE_TAG -f docker/Dockerfile.cache
   docker push $CACHE_TAG
 fi

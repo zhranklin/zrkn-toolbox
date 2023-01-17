@@ -1,0 +1,10 @@
+FROM openjdk:8u342 as j8
+FROM openjdk:9.0.4-jdk-slim as j9
+FROM openjdk:11.0.16-jdk-slim as j11
+# 官方仓库的java 14没有多架构, 只有这个有
+FROM adoptopenjdk/openjdk14:jdk-14.0.2_12-slim as j14
+FROM openjdk:17.0.2-buster
+COPY --from=j8 /usr/local/openjdk-8 /usr/local/openjdk-8
+COPY --from=j9 /usr/lib/jvm/java-9-openjdk-* /usr/local/openjdk-9
+COPY --from=j11 /usr/local/openjdk-11 /usr/local/openjdk-11
+COPY --from=j14 /opt/java/openjdk /usr/local/openjdk-14
