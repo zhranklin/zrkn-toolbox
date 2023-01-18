@@ -1,5 +1,5 @@
 #!/bin/bash
-BASE_VERSION=v0.1.8
+BASE_VERSION=v0.1.9
 TYPE=toolbox
 if [[ $1 != "" ]]; then
   TYPE=$1
