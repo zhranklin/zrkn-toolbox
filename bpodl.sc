@@ -1,13 +1,16 @@
-//#!/usr/bin/env amm
-import $ivy.`com.zhranklin::scala-tricks:0.2.1`
-import $ivy.`com.lihaoyi::os-lib:0.8.0`
-import $ivy.`com.lihaoyi::geny:0.6.2`
-import $ivy.`com.lihaoyi::ammonite-ops:2.2.0`
+#!/usr/bin/env amm
+import $ivy.`com.lihaoyi::requests:0.8.0`
+import $ivy.`com.lihaoyi::upickle:3.0.0-M1`
+import $ivy.`com.zhranklin:scala-tricks_2.13:0.2.1`
+import $ivy.`com.lihaoyi::os-lib:0.9.0`
+import $ivy.`com.lihaoyi:ammonite-ops_2.13:2.4.0`
 import $ivy.`org.yaml:snakeyaml:1.17`
+import $ivy.`org.jsoup:jsoup:1.15.4`
 import zrkn.op._
 import Pipe._
-import RegexOpsContext._
+//import RegexOpsContext._
 import os.proc
+import mainargs.Leftover
 
 val FLAC_FORMAT = "audio0-flac"
 val FORMAT_FHD = "wv*[height=1080][fps>40] / wv*[height=1080][vcodec*=hvc]  / bv*[height=1080]"
@@ -16,11 +19,39 @@ val FORMAT_UHD = "bv"
 type BaseArgs = List[String]
 type VideoId = String
 
+import java.util.regex.Pattern
+def groups(str: String) = "\\(".r.findAllIn(str).size - """\(\?([idmsuxU=>!:]|<[!=])""".r.findAllIn(str).size
+class Interped(sc: StringContext) {
+  def unapplySeq(s: String): Option[Seq[String]] = {
+    val parts = sc.parts
+    val tail = parts.tail.map(s => if (s.startsWith("(")) s else "(.*)" + s)
+    val pattern = Pattern.compile(parts.head + tail.mkString)
+    var groupCount = groups(parts.head)
+    val usedGroup = tail.map(part => {
+      val ret = groupCount
+      groupCount += groups(part)
+      ret
+    })
+    val m = pattern matcher s
+    if (m.matches()) {
+      Some(usedGroup.map(i => m.group(i + 1)))
+    } else None
+  }
+}
+extension (sc: StringContext) def rr: Interped = new Interped(sc)
+
 @main
-def main(args: String*) = {
-//  cd(oPath("/Users/zhranklin/bpodl"))
+def info(id: Int): Unit =
+  //curl -Haccept-language:zh-CN,zh\;q=0.9 'https://api.digitalconcerthall.com/v2/concert/'$i --compressed > $i.work.json
+  //println(requests.get(s"https://api.digitalconcerthall.com/v2/concert/$i", ))
+  println(ujson.read(requests.get(s"https://api.digitalconcerthall.com/v2/season/$id")).obj("_links").obj("concert").arr.map(_.obj("href").str).toList.toString)
+end info
+
+@main
+def download(args: Leftover[String]) = {
+  cd(oPath("/Users/zhranklin/bpodl"))
 //  cd(oPath("/Volumes/Fast SSD/2019-2020"))
-  args.foreach { id =>
+  args.value.foreach { id =>
     try {
       id match {
         case rr"""$id-$item""" =>
@@ -33,6 +64,11 @@ def main(args: String*) = {
     }
   }
 }
+
+@main
+def list(id: Int): Unit =
+  println(ujson.read(requests.get(s"https://api.digitalconcerthall.com/v2/season/$id")).obj("_links").obj("concert").arr.map(_.obj("href").str).toList.toString)
+end list
 
 def processLink(link: String, item: String): Unit = {
   implicit val args: BaseArgs = ydlBaseArgs(link, item)
