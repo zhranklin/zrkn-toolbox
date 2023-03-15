@@ -1,7 +1,4 @@
-#!/bin/bash
-ARGS=""; for a in "$@"; do ARGS="$ARGS,$(printf '%s' "$a"|base64 -w 0)"; done; ARGS="$ARGS" exec amm3 "$0";
-!#
-val args = System.getenv("ARGS").split(",").toList.drop(1).map(a => String(java.util.Base64.getDecoder().decode(a)))
+#!/usr/bin/env amm3
 
 import $ivy.`org.apache.httpcomponents:httpclient:4.5.2`
 import $ivy.`joda-time:joda-time:2.1`
@@ -13,8 +10,12 @@ import com.netease.cloud.services.nos.model.{CompleteMultipartUploadRequest, Com
 import java.io.{ByteArrayInputStream, File, FileInputStream, InputStream}
 import java.util
 
+import mainargs.{main, arg, ParserForMethods, Leftover}
+@main
+def main(rest: Leftover[String]) =
+  uploadFileToNOS(rest.value.head, rest.value.last)
+end main
 
-uploadFileToNOS(args.head, args.last)
 
 def uploadFileToNOS(filePath: String, nosFilePath: String): Unit = {
   val nosSecretKey: String = System.getenv("NOS_SK")
@@ -67,4 +68,16 @@ def uploadFileToNOS(filePath: String, nosFilePath: String): Unit = {
     val completeRequest: CompleteMultipartUploadRequest = new CompleteMultipartUploadRequest(nosBucketName, nosFilePath, uploadId, partETags)
     val completeResult: CompleteMultipartUploadResult = nosClient.completeMultipartUpload(completeRequest)
   }
+}
+
+
+import upickle.default.{ReadWriter => RW, macroRW}
+
+case class Thing(myFieldA: Int, myFieldB: String)
+object Thing{
+  implicit val rw: RW[Thing] = macroRW
+}
+case class Big(i: Int, b: Boolean, str: String, c: Char, t: Thing)
+object Big{
+  implicit val rw: RW[Big] = macroRW
 }

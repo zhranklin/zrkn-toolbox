@@ -219,7 +219,8 @@ profiles:
           key_code: i
           modifiers: { "mandatory": [ "$CAPSLOCK" ] }
         to:
-        - key_code: home
+        - key_code: i
+          modifiers: [ "left_control" ]
         type: basic
       - from:
           key_code: o
@@ -232,7 +233,8 @@ profiles:
           key_code: o
           modifiers: { "mandatory": [ "$CAPSLOCK" ] }
         to:
-        - key_code: end
+        - key_code: o
+          modifiers: [ "left_control" ]
         type: basic
       - from:
           key_code: p

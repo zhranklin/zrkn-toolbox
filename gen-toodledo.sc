@@ -1,16 +1,18 @@
-#!/bin/bash
-""""docker ps|grep -q amm_sshd||bash <(docker run --rm zhranklin/amm:latest sshd) 1>&2;mkfifo -m 600 amm.$$;echo '-----BEGIN OPENSSH PRIVATE KEY-----*b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAaAAAABNlY2RzYS*1zaGEyLW5pc3RwMjU2AAAACG5pc3RwMjU2AAAAQQSBzFCjGerP9fb2HEmNyWWhEAI0kft1*bPukGnyVmtzOFkuteJBPOYmxOWax7DRnGNV9fsoVDTSmS09Cx9C7cbx1AAAAqP8ojFD/KI*xQAAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIHMUKMZ6s/19vYc*SY3JZaEQAjSR+3Vs+6QafJWa3M4WS614kE85ibE5ZrHsNGcY1X1+yhUNNKZLT0LH0LtxvH*UAAAAhAI58txPeP2BEamdEPpqTKA1Y5/QJqOnTPsHi4a+aOukEAAAACGFtbV91c2VyAQID*BAUGBw==*-----END OPENSSH PRIVATE KEY-----*'|tr '*' '\n'>amm.$$|ssh-add -t 1 amm.$$ 2>&1|grep -v "Identity added"|grep -v "ifetime set to" 1>&2;rm -f amm.$$;args=$(args=( "$@" );printf '%q ' "${args[@]}");ssh 127.0.0.1 -p23232 -oLogLevel=ERROR -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null "OUTER_PWD=$PWD amm \"/rt/$PWD/$0\" $args";exit #""";object#!/{val bin=(_:Any)=>this;val bash=bin};object/
-
-import org.springframework.http.MediaType
-import ammonite.ops._
-import zrkn.op._
-
-import java.net.URI
-import $ivy.`com.zhranklin:scala-tricks_2.13:0.2.1`
+#!/usr/local/bin/amm3
+//Ammonite 2.5.4
+//scala 3.1.2
+import $ivy.`io.circe:circe-core_2.13:0.13.0`
+import $ivy.`io.circe:circe-parser_2.13:0.13.0`
 import $ivy.`io.circe:circe-generic_2.13:0.13.0`
 import $ivy.`io.circe:circe-optics_2.13:0.13.0`
 import $ivy.`org.springframework:spring-web:5.2.6.RELEASE`
 import $ivy.`org.springframework:spring-core:5.2.6.RELEASE`
+import $ivy.`com.lihaoyi:requests_2.13:0.8.0`
+
+
+import org.springframework.http.MediaType
+
+import java.net.URI
 import org.springframework.http.{HttpMethod, RequestEntity}
 import org.springframework.web.client.RestTemplate
 import io.circe._
@@ -24,10 +26,33 @@ import java.time._
 import java.util.TimeZone
 import scala.util.{Failure, Success, Try}
 
-val tokenFile = oPath("./toodledo-token.json")
+class Interped(sc: StringContext) {
+  import java.util.regex.Pattern
+  private def groups(str: String) = "\\(".r.findAllIn(str).size - """\(\?([idmsuxU=>!:]|<[!=])""".r.findAllIn(str).size
+  def unapplySeq(s: CharSequence): Option[Seq[String]] = {
+    val parts = sc.parts
+    val tail = parts.tail.map(s => if (s.startsWith("(")) s else "(.*)" + s)
+    val pattern = Pattern.compile(parts.head + tail.mkString)
+    var groupCount = groups(parts.head)
+    val usedGroup = tail.map(part => {
+      val ret = groupCount
+      groupCount += groups(part)
+      ret
+    })
+    val m = pattern matcher s
+    if (m.matches()) {
+      Some(usedGroup.map(i => m.group(i + 1)))
+    }
+    else None
+  }
+}
+extension (sc: StringContext)
+def rr: Interped = new Interped(sc)
+
+val tokenFile = os.pwd / ("toodledo-token.json")
 val clientId = "zhranklin"
 val secret = "api5f631a741453a"
-val client = new RestTemplate()
+val client = new RestTemplate
 val URL_API = "https://api.toodledo.com/3"
 val URL_ACCOUNT = s"$URL_API/account"
 val URL_TASKS = s"$URL_API/tasks"
@@ -35,6 +60,8 @@ type MM = MultiValueMap[String, String]
 
 def trim(str: String, length: Int) = if (str.length <= length) str else str.take(length - 3) + "..."
 abstract class ApiRequest[T](val uri: String, val httpMethod: HttpMethod, val withAuth: Boolean) {
+  def post(url: String, body: String) = requests.post(url = url, headers = baseHeaders, data = body).text
+  def get(url: String) = requests.get(url = url, headers = baseHeaders).text
   def multiMap(kvs: (String, String)*): MM = {
     val result = new LinkedMultiValueMap[String, String]
     kvs.foreach(kv => result.add(kv._1, kv._2))
@@ -47,12 +74,13 @@ abstract class ApiRequest[T](val uri: String, val httpMethod: HttpMethod, val wi
         if (withAuth) h.setBasicAuth(clientId, secret);
       }
   protected def request: RequestEntity[T]
+  protected def req: String = ""
   def execute: String = {
-    val res = client.exchange(request, classOf[String]).getBody
+    val res = req
     postExec(res)
     res
   }
-  def json: Json = parseJson(execute).getOrElse(Json.Null)
+  def json: Json = io.circe.parser.parse(execute).getOrElse(Json.Null)
   def postExec(resp: String): Unit = {}
 }
 
@@ -61,7 +89,7 @@ case class GetToken(code: String) extends ApiRequest[String](uri = s"$URL_ACCOUN
     .body(s"grant_type=authorization_code&code=$code&vers=3&os=7")
   override def postExec(resp: String): Unit = {
     println(s"fetch token: $resp")
-    write.over(tokenFile, parseJson(resp).getOrElse(Json.Null).asObject.get.+:("time" := ""+System.currentTimeMillis()).asJson.toString())
+    os.write.over(tokenFile, io.circe.parser.parse(resp).getOrElse(Json.Null).asObject.get.+:("time" := ""+System.currentTimeMillis()).asJson.toString())
   }
 }
 
@@ -70,29 +98,30 @@ case class RefreshToken(refreshToken: String) extends ApiRequest[String](uri = s
     .body(s"grant_type=refresh_token&refresh_token=$refreshToken&vers=3&os=7")
   override def postExec(resp: String): Unit = {
     println(s"refresh token: $resp")
-    write.over(tokenFile, parseJson(resp).getOrElse(Json.Null).asObject.get.+:("time" := ""+System.currentTimeMillis()).asJson.toString())
+    os.write.over(tokenFile, io.circe.parser.parse(resp).getOrElse(Json.Null).asObject.get.+:("time" := ""+System.currentTimeMillis()).asJson.toString())
   }
 }
 
+
+def genBody(data: (String, String)*) = data
+  .toMap
+  .mapValues(v => java.net.URLEncoder.encode(v, java.nio.charset.StandardCharsets.UTF_8.toString))
+  .map { case (k, v) => s"$k=$v" }
+  .mkString("&")
+
+def baseHeaders = Map("content-type" -> MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+
 case class AddTasks(tasks: List[Map[String, Json]], token: String) extends ApiRequest[MM](s"$URL_TASKS/add.php", HttpMethod.POST, false) {
-  val encodedTasks = {
-    val tasksJson = tasks.asJson.printWith(io.circe.Printer.spaces2)
-    java.net.URLEncoder.encode(tasksJson, "utf-8")
-  }
-  def request: RequestEntity[MM] = builder
-    .body(multiMap(
-      "access_token" -> token,
-      "tasks" -> tasks.asJson.printWith(io.circe.Printer.spaces2),
-      "fields" -> "context,status,priority,tag")
-    )
+  protected def request: RequestEntity[MM] = null
   override def postExec(resp: String): Unit = println(trim(resp, 150))
+  override def req: String = post(url = s"$URL_TASKS/add.php", body = genBody(
+    "access_token" -> token,
+    "tasks" -> tasks.asJson.printWith(io.circe.Printer.spaces2),
+    "fields" -> "context,status,priority,tag"
+  ))
 }
 
 case class EditTasks(tasks: List[Map[String, Json]], token: String) extends ApiRequest[MM](s"$URL_TASKS/edit.php", HttpMethod.POST, false) {
-  val encodedTasks = {
-    val tasksJson = tasks.asJson.printWith(io.circe.Printer.spaces2)
-    java.net.URLEncoder.encode(tasksJson, "utf-8")
-  }
   def request: RequestEntity[MM] = builder
     .body(multiMap(
       "access_token" -> token,
@@ -110,9 +139,9 @@ case class GetTasks(comp: Int, token: String) extends ApiRequest[Void](s"$URL_TA
 def getToken(code: String): String = {
   val token = Try {
     val token :: time :: refreshToken :: Nil = {
-      val json = read ! tokenFile
+      val json = os.read(tokenFile)
       List("access_token", "time", "refresh_token").map(key =>
-        parseJson(json).toOption.flatMap(_.\\(key).headOption).flatMap(_.asString).get
+        io.circe.parser.parse(json).toOption.flatMap(_.\\(key).headOption).flatMap(_.asString).get
       )
     }
     if (System.currentTimeMillis() <= time.toLong + 3600 * 1000) token
@@ -131,10 +160,9 @@ def getToken(code: String): String = {
 }
 @main
 def main(code: String = "UNKNOWN"): Unit = {
-  val str = read!(root/"dev"/"stdin")
-  import RegexOpsContext._
+  val str = os.read(os.root/"dev"/"stdin")
   val getId: String => Option[String] = {
-    case rr"$id((Task|Bug|Requirement|Objective|Subtask)-\d+) .*" => Some(id)
+    //case rr"$id((Task|Bug|Requirement|Objective|Subtask)-\d+) .*" => Some(id)
     case _ => None
   }
   println(s"How to get code:\n$URL_ACCOUNT/authorize.php?response_type=code&client_id=zhranklin&state=YourState&scope=basic%20tasks%20write")
@@ -144,12 +172,12 @@ def main(code: String = "UNKNOWN"): Unit = {
     .map(task => (task("title").flatMap(_.asString).flatMap(getId), task))
     .flatMap(tuple => tuple._1.map(t => (t, tuple._2)))
     .toMap
-//  println(currentTasks)
+  //  println(currentTasks)
   val taskIds = currentTasksResp.\\("title").flatMap(_.asString).flatMap(getId).toSet
 
   import io.circe.optics.JsonPath
   println("Tasks parsed:")
-  val tasks = JsonPath.root.result.arr.getOption(parseJson(str).getOrElse(Json.Null)).get
+  val tasks = JsonPath.root.result.arr.getOption(io.circe.parser.parse(str).getOrElse(Json.Null)).get
     .filter(entry => JsonPath.root.receipt.state.long.getOption(entry).get != 3)
     .map { entry =>
       import JsonPath._
