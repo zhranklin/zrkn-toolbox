@@ -47,7 +47,7 @@ class Interped(sc: StringContext) {
   }
 }
 extension (sc: StringContext)
-def rr: Interped = new Interped(sc)
+  def rr: Interped = new Interped(sc)
 
 val tokenFile = os.pwd / ("toodledo-token.json")
 val clientId = "zhranklin"
