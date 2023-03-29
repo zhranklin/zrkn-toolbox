@@ -1,6 +1,6 @@
 #!/usr/local/bin/amm3
-//Ammonite 2.5.4
-//scala 3.1.2
+//Ammonite 2.5.5
+//scala 3.2.0
 import $ivy.`io.circe:circe-core_2.13:0.13.0`
 import $ivy.`io.circe:circe-parser_2.13:0.13.0`
 import $ivy.`io.circe:circe-generic_2.13:0.13.0`
@@ -59,22 +59,11 @@ val URL_TASKS = s"$URL_API/tasks"
 type MM = MultiValueMap[String, String]
 
 def trim(str: String, length: Int) = if (str.length <= length) str else str.take(length - 3) + "..."
-abstract class ApiRequest[T](val uri: String, val httpMethod: HttpMethod, val withAuth: Boolean) {
+abstract class ApiRequest {
   def post(url: String, body: String) = requests.post(url = url, headers = baseHeaders, data = body).text
+  def postWithSec(url: String, body: String) = requests.post(url = url, headers = baseHeaders, auth = new requests.RequestAuth.Basic(clientId, secret), data = body).text
   def get(url: String) = requests.get(url = url, headers = baseHeaders).text
-  def multiMap(kvs: (String, String)*): MM = {
-    val result = new LinkedMultiValueMap[String, String]
-    kvs.foreach(kv => result.add(kv._1, kv._2))
-    result
-  }
-  protected def builder =
-    RequestEntity.method(httpMethod, URI.create(uri))
-      .headers { (h: HttpHeaders) =>
-        h.setContentType(MediaType.APPLICATION_FORM_URLENCODED)
-        if (withAuth) h.setBasicAuth(clientId, secret);
-      }
-  protected def request: RequestEntity[T]
-  protected def req: String = ""
+  def req: String
   def execute: String = {
     val res = req
     postExec(res)
@@ -84,18 +73,26 @@ abstract class ApiRequest[T](val uri: String, val httpMethod: HttpMethod, val wi
   def postExec(resp: String): Unit = {}
 }
 
-case class GetToken(code: String) extends ApiRequest[String](uri = s"$URL_ACCOUNT/token.php", HttpMethod.POST, true) {
-  def request: RequestEntity[String] = builder
-    .body(s"grant_type=authorization_code&code=$code&vers=3&os=7")
+case class GetToken(code: String) extends ApiRequest {
+  override def req: String = postWithSec(url = s"$URL_ACCOUNT/token.php", body = genBody(
+    "grant_type" -> "authorization_code",
+    "code" -> code,
+    "vers" -> "3",
+    "os" -> "7"
+  ))
   override def postExec(resp: String): Unit = {
     println(s"fetch token: $resp")
     os.write.over(tokenFile, io.circe.parser.parse(resp).getOrElse(Json.Null).asObject.get.+:("time" := ""+System.currentTimeMillis()).asJson.toString())
   }
 }
 
-case class RefreshToken(refreshToken: String) extends ApiRequest[String](uri = s"$URL_ACCOUNT/token.php", HttpMethod.POST, true) {
-  def request: RequestEntity[String] = builder
-    .body(s"grant_type=refresh_token&refresh_token=$refreshToken&vers=3&os=7")
+case class RefreshToken(refreshToken: String) extends ApiRequest {
+  override def req: String = postWithSec(url = s"$URL_ACCOUNT/token.php", body = genBody(
+    "grant_type" -> "refresh_token",
+    "refresh_token" -> refreshToken,
+    "vers" -> "3",
+    "os" -> "7"
+  ))
   override def postExec(resp: String): Unit = {
     println(s"refresh token: $resp")
     os.write.over(tokenFile, io.circe.parser.parse(resp).getOrElse(Json.Null).asObject.get.+:("time" := ""+System.currentTimeMillis()).asJson.toString())
@@ -111,8 +108,7 @@ def genBody(data: (String, String)*) = data
 
 def baseHeaders = Map("content-type" -> MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 
-case class AddTasks(tasks: List[Map[String, Json]], token: String) extends ApiRequest[MM](s"$URL_TASKS/add.php", HttpMethod.POST, false) {
-  protected def request: RequestEntity[MM] = null
+case class AddTasks(tasks: List[Map[String, Json]], token: String) extends ApiRequest {
   override def postExec(resp: String): Unit = println(trim(resp, 150))
   override def req: String = post(url = s"$URL_TASKS/add.php", body = genBody(
     "access_token" -> token,
@@ -121,18 +117,17 @@ case class AddTasks(tasks: List[Map[String, Json]], token: String) extends ApiRe
   ))
 }
 
-case class EditTasks(tasks: List[Map[String, Json]], token: String) extends ApiRequest[MM](s"$URL_TASKS/edit.php", HttpMethod.POST, false) {
-  def request: RequestEntity[MM] = builder
-    .body(multiMap(
-      "access_token" -> token,
-      "tasks" -> tasks.asJson.printWith(io.circe.Printer.spaces2),
-      "fields" -> "duedate,duedatemod")
-    )
+case class EditTasks(tasks: List[Map[String, Json]], token: String) extends ApiRequest {
+  override def req: String = post(url = s"$URL_TASKS/edit.php", body = genBody(
+    "access_token" -> token,
+    "tasks" -> tasks.asJson.printWith(io.circe.Printer.spaces2),
+    "fields" -> "duedate,duedatemod"
+  ))
   override def postExec(resp: String): Unit = println(trim(resp, 150))
 }
 
-case class GetTasks(comp: Int, token: String) extends ApiRequest[Void](s"$URL_TASKS/get.php?fields=duedate,duedatemod&comp=$comp&access_token=$token", HttpMethod.GET, false) {
-  def request: RequestEntity[Void] = builder.build()
+case class GetTasks(comp: Int, token: String) extends ApiRequest {
+  override def req: String = get(s"$URL_TASKS/get.php?fields=duedate,duedatemod&comp=$comp&access_token=$token")
   override def postExec(resp: String): Unit = println(trim(resp, 150))
 }
 
@@ -162,7 +157,7 @@ def getToken(code: String): String = {
 def main(code: String = "UNKNOWN"): Unit = {
   val str = os.read(os.root/"dev"/"stdin")
   val getId: String => Option[String] = {
-    //case rr"$id((Task|Bug|Requirement|Objective|Subtask)-\d+) .*" => Some(id)
+    case rr"$id((Task|Bug|Requirement|Objective|Subtask)-\d+) .*" => Some(id)
     case _ => None
   }
   println(s"How to get code:\n$URL_ACCOUNT/authorize.php?response_type=code&client_id=zhranklin&state=YourState&scope=basic%20tasks%20write")
