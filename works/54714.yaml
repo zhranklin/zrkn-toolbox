@@ -1,0 +1,815 @@
+id: "54714"
+date:
+  published: 1659866400
+  begin: 720385200
+  end: 720396000
+metadata:
+  title: 丹尼尔·巴伦博伊姆指挥布鲁克纳与舒伯特作品
+  description: 凭借“出色的表演”（语出《明镜》），1964年，年仅21岁的丹尼尔·巴伦博伊姆以钢琴家的身份在柏林爱乐乐团首次亮相。不久之后，他作为指挥的首次亮相同样备受赞誉，引起轰动。自那时起，他与柏林爱乐乐团之间便建立起了十分密切的合作关系。在本场音乐会中，巴伦博伊姆指挥乐团演奏了布鲁克纳的《第四交响曲》“浪漫”、很少被上演的康塔塔作品《赫尔戈兰岛》，以及舒伯特的《水上幽灵之歌》。
+_embedded:
+  work:
+    - id: 54714-1
+      title: 《赫尔戈兰岛》为男声合唱团与乐队而作的康塔塔
+      date:
+        published: 1659866400
+        begin: 720385200
+      name_composer: 安东·布鲁克纳
+      duration: 667
+      duration_total: 766
+      cuepoints:
+        - time: 41
+          duration: 667
+          text: Helgoland
+        - time: 708
+          duration: 58
+          text: Applause
+      skippable_segments: null
+      metadata:
+        title: null
+        description: '作曲: 安东 布鲁克纳'
+      _links:
+        concert:
+          - href: //api.digitalconcerthall.com/v2/concert/54714
+            updated: 1674835264
+            id: "54714"
+            title: 丹尼尔·巴伦博伊姆指挥布鲁克纳与舒伯特作品
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/bb9aef51428d24122e707eacba44c0ce.jpg
+                  credit: Reinhard Friedrich
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+                  credit: Reinhard Friedrich
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/aca2e8a0edd4f1d09e40bf2eab9d2431.jpg
+                  credit: Reinhard Friedrich
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            is_free: false
+            date:
+              published: 1659866400
+              begin: 720385200
+              end: 720396000
+            image:
+              overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+              detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+            blocked_in: []
+            additional_broadcasts: null
+        artist:
+          - href: //api.digitalconcerthall.com/v2/artist/5
+            updated: 1676918352
+            id: "5"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/b57aa8fc370c1ca896757011cf44e65c.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 安东·布鲁克纳
+            display_name: 布鲁克纳·安东
+            display_type: person
+            name_prefix: null
+            first_name: 安东
+            last_name: 布鲁克纳
+            group_name: null
+            sort_letter: B
+            is_highlighted: false
+            fields_of_work:
+              - composer
+            count:
+              as_composer:
+                work_total: 42
+                work_vod: 42
+                work_live: 0
+                work_in_post_production: 0
+              as_conductor:
+                concert_total: 0
+                concert_vod: 0
+                concert_live: 0
+                concert_in_post_production: 0
+              as_soloist:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 0
+            role:
+              type: composer
+              name: null
+          - href: //api.digitalconcerthall.com/v2/artist/961
+            updated: 1676918352
+            id: "961"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/profile-square.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 柏林广播男声合唱团
+            display_name: 柏林广播男声合唱团
+            display_type: group
+            name_prefix: null
+            first_name: null
+            last_name: null
+            group_name: 柏林广播男声合唱团
+            sort_letter: B
+            is_highlighted: false
+            fields_of_work: []
+            count:
+              as_ensemble:
+                concert_total: 6
+                concert_vod: 6
+                concert_live: 0
+                concert_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 2
+            role:
+              type: voice
+              name: null
+          - href: //api.digitalconcerthall.com/v2/artist/2192
+            updated: 1676918352
+            id: "2192"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/profile-square.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 恩斯特森夫合唱团男声部
+            display_name: 恩斯特森夫合唱团男声部
+            display_type: group
+            name_prefix: null
+            first_name: null
+            last_name: null
+            group_name: Men of the Ernst Senff Chor
+            sort_letter: EN
+            is_highlighted: false
+            fields_of_work: []
+            count:
+              as_ensemble:
+                concert_total: 1
+                concert_vod: 1
+                concert_live: 0
+                concert_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 2
+            role:
+              type: voice
+              name: null
+        epoch:
+          - href: //api.digitalconcerthall.com/v2/epoch/4
+            updated: 1676918312
+            id: "4"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89dffea035376690229fc92be867c8bf.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89dffea035376690229fc92be867c8bf.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89dffea035376690229fc92be867c8bf.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            name: 晚期浪漫派
+            count:
+              concert_total: 423
+              concert_vod: 423
+              concert_live: 0
+              concert_in_post_production: 0
+              work_total: 782
+              work_vod: 770
+              work_live: 10
+              work_in_post_production: 2
+              concert: 423
+              work: 770
+              interview: 0
+          - href: //api.digitalconcerthall.com/v2/epoch/5
+            updated: 1676918317
+            id: "5"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            name: 现当代
+            count:
+              concert_total: 499
+              concert_vod: 499
+              concert_live: 0
+              concert_in_post_production: 0
+              work_total: 1156
+              work_vod: 1125
+              work_live: 22
+              work_in_post_production: 9
+              concert: 499
+              work: 1125
+              interview: 1
+        streams:
+          href: //api.digitalconcerthall.com/v2/streams/54714-1
+    - updated: 1676918352
+      id: 54714-2
+      title: 《水上幽灵之歌》
+      short_title: null
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/bb9aef51428d24122e707eacba44c0ce.jpg
+            credit: Reinhard Friedrich
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+            credit: Reinhard Friedrich
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/aca2e8a0edd4f1d09e40bf2eab9d2431.jpg
+            credit: Reinhard Friedrich
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+      is_free: false
+      date:
+        published: 1659866400
+        begin: 720385200
+      name_composer: 弗朗茨·舒伯特
+      display_name_composer: 舒伯特·弗朗茨
+      concert_id: "54714"
+      concert_href: //api.digitalconcerthall.com/v2/concert/54714
+      name_orchestra: []
+      name_conductor: []
+      image:
+        overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+        detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+      blocked_in: []
+      copyright: null
+      max_resolution: 1080p
+      hdr_formats: []
+      audio_formats:
+        stereo:
+          - aac
+          - flac
+        surround: []
+        immersive: []
+      is_highlight: false
+      duration: 781
+      duration_total: 939
+      caption: null
+      cuepoints:
+        - time: 28
+          duration: 781
+          text: Gesang der Geister über den Wassern
+        - time: 809
+          duration: 130
+          text: Applause
+      skippable_segments: null
+      metadata:
+        title: null
+        description: '作曲: 弗朗茨 舒伯特'
+      _links:
+        concert:
+          - href: //api.digitalconcerthall.com/v2/concert/54714
+            updated: 1674835264
+            id: "54714"
+            title: 丹尼尔·巴伦博伊姆指挥布鲁克纳与舒伯特作品
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/bb9aef51428d24122e707eacba44c0ce.jpg
+                  credit: Reinhard Friedrich
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+                  credit: Reinhard Friedrich
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/aca2e8a0edd4f1d09e40bf2eab9d2431.jpg
+                  credit: Reinhard Friedrich
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            is_free: false
+            date:
+              published: 1659866400
+              begin: 720385200
+              end: 720396000
+            image:
+              overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+              detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+            blocked_in: []
+            additional_broadcasts: null
+        artist:
+          - href: //api.digitalconcerthall.com/v2/artist/146
+            updated: 1676918352
+            id: "146"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/abc24a2b1583dab8d5c3434b4d3c931b.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/ae9849a6369184ddc08cf272eda95452.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/33a6d35d09755429c683d8b9aff899f9.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/14ce09e46fd6e9eda1c9dc9813e5a3db.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 弗朗茨·舒伯特
+            display_name: 舒伯特·弗朗茨
+            display_type: person
+            name_prefix: null
+            first_name: 弗朗茨
+            last_name: 舒伯特
+            group_name: null
+            sort_letter: SH
+            is_highlighted: false
+            fields_of_work:
+              - composer
+            count:
+              as_composer:
+                work_total: 32
+                work_vod: 32
+                work_live: 0
+                work_in_post_production: 0
+              as_conductor:
+                concert_total: 0
+                concert_vod: 0
+                concert_live: 0
+                concert_in_post_production: 0
+              as_soloist:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 0
+            role:
+              type: composer
+              name: null
+          - href: //api.digitalconcerthall.com/v2/artist/961
+            updated: 1676918352
+            id: "961"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/profile-square.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 柏林广播男声合唱团
+            display_name: 柏林广播男声合唱团
+            display_type: group
+            name_prefix: null
+            first_name: null
+            last_name: null
+            group_name: 柏林广播男声合唱团
+            sort_letter: B
+            is_highlighted: false
+            fields_of_work: []
+            count:
+              as_ensemble:
+                concert_total: 6
+                concert_vod: 6
+                concert_live: 0
+                concert_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 2
+            role:
+              type: voice
+              name: null
+          - href: //api.digitalconcerthall.com/v2/artist/2192
+            updated: 1676918352
+            id: "2192"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/profile-square.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 恩斯特森夫合唱团男声部
+            display_name: 恩斯特森夫合唱团男声部
+            display_type: group
+            name_prefix: null
+            first_name: null
+            last_name: null
+            group_name: Men of the Ernst Senff Chor
+            sort_letter: EN
+            is_highlighted: false
+            fields_of_work: []
+            count:
+              as_ensemble:
+                concert_total: 1
+                concert_vod: 1
+                concert_live: 0
+                concert_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 2
+            role:
+              type: voice
+              name: null
+        epoch:
+          - href: //api.digitalconcerthall.com/v2/epoch/2
+            updated: 1676918311
+            id: "2"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1575b2651ba138668fbf3d308cd520bf.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1575b2651ba138668fbf3d308cd520bf.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1575b2651ba138668fbf3d308cd520bf.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            name: 古典
+            count:
+              concert_total: 157
+              concert_vod: 157
+              concert_live: 0
+              concert_in_post_production: 0
+              work_total: 266
+              work_vod: 261
+              work_live: 5
+              work_in_post_production: 0
+              concert: 157
+              work: 261
+              interview: 0
+        streams:
+          href: //api.digitalconcerthall.com/v2/streams/54714-2
+    - updated: 1676918352
+      id: 54714-3
+      title: 《降E大调第四交响曲》“浪漫”（哈斯之后的原版）
+      short_title: null
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/bb9aef51428d24122e707eacba44c0ce.jpg
+            credit: Reinhard Friedrich
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+            credit: Reinhard Friedrich
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/aca2e8a0edd4f1d09e40bf2eab9d2431.jpg
+            credit: Reinhard Friedrich
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+      is_free: false
+      date:
+        published: 1659866400
+        begin: 720385200
+      name_composer: 安东·布鲁克纳
+      display_name_composer: 布鲁克纳·安东
+      concert_id: "54714"
+      concert_href: //api.digitalconcerthall.com/v2/concert/54714
+      name_orchestra: []
+      name_conductor: []
+      image:
+        overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+        detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+      blocked_in: []
+      copyright: null
+      max_resolution: 1080p
+      hdr_formats: []
+      audio_formats:
+        stereo:
+          - aac
+          - flac
+        surround: []
+        immersive: []
+      is_highlight: false
+      duration: 4241
+      duration_total: 4643
+      caption: null
+      cuepoints:
+        - time: 30
+          duration: 1181
+          text: 1. Bewegt, nicht zu schnell
+        - time: 1211
+          duration: 1022
+          text: 2. Andante quasi Allegretto
+        - time: 2233
+          duration: 665
+          text: '3. Scherzo: Bewegt – Trio: Nicht zu schnell. Keinesfalls schleppend'
+        - time: 2898
+          duration: 1373
+          text: '4. Finale: Bewegt, doch nicht zu schnell'
+        - time: 4271
+          duration: 372
+          text: Applause
+      skippable_segments: null
+      metadata:
+        title: null
+        description: '作曲: 安东 布鲁克纳'
+      _links:
+        concert:
+          - href: //api.digitalconcerthall.com/v2/concert/54714
+            updated: 1674835264
+            id: "54714"
+            title: 丹尼尔·巴伦博伊姆指挥布鲁克纳与舒伯特作品
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/bb9aef51428d24122e707eacba44c0ce.jpg
+                  credit: Reinhard Friedrich
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+                  credit: Reinhard Friedrich
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/aca2e8a0edd4f1d09e40bf2eab9d2431.jpg
+                  credit: Reinhard Friedrich
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            is_free: false
+            date:
+              published: 1659866400
+              begin: 720385200
+              end: 720396000
+            image:
+              overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+              detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/1d26d41aab55286f7ceef6bf7aed8044.jpg
+            blocked_in: []
+            additional_broadcasts: null
+        artist:
+          - href: //api.digitalconcerthall.com/v2/artist/5
+            updated: 1676918352
+            id: "5"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/b57aa8fc370c1ca896757011cf44e65c.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 安东·布鲁克纳
+            display_name: 布鲁克纳·安东
+            display_type: person
+            name_prefix: null
+            first_name: 安东
+            last_name: 布鲁克纳
+            group_name: null
+            sort_letter: B
+            is_highlighted: false
+            fields_of_work:
+              - composer
+            count:
+              as_composer:
+                work_total: 42
+                work_vod: 42
+                work_live: 0
+                work_in_post_production: 0
+              as_conductor:
+                concert_total: 0
+                concert_vod: 0
+                concert_live: 0
+                concert_in_post_production: 0
+              as_soloist:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 0
+            role:
+              type: composer
+              name: null
+        epoch:
+          - href: //api.digitalconcerthall.com/v2/epoch/4
+            updated: 1676918312
+            id: "4"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89dffea035376690229fc92be867c8bf.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89dffea035376690229fc92be867c8bf.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89dffea035376690229fc92be867c8bf.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            name: 晚期浪漫派
+            count:
+              concert_total: 423
+              concert_vod: 423
+              concert_live: 0
+              concert_in_post_production: 0
+              work_total: 782
+              work_vod: 770
+              work_live: 10
+              work_in_post_production: 2
+              concert: 423
+              work: 770
+              interview: 0
+          - href: //api.digitalconcerthall.com/v2/epoch/5
+            updated: 1676918317
+            id: "5"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            name: 现当代
+            count:
+              concert_total: 499
+              concert_vod: 499
+              concert_live: 0
+              concert_in_post_production: 0
+              work_total: 1156
+              work_vod: 1125
+              work_live: 22
+              work_in_post_production: 9
+              concert: 499
+              work: 1125
+              interview: 1
+        streams:
+          href: //api.digitalconcerthall.com/v2/streams/54714-3

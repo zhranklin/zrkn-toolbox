@@ -1,0 +1,1382 @@
+updated: 1678182829
+id: "2589"
+title: 雅尼克·尼泽-塞冈演绎柴科夫斯基与拉威尔作品
+image_variants:
+  standard:
+    - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/9056f8143b69870f111125a60bd615bd.jpg
+      credit: null
+      aspect_ratio_from: 0.7
+      aspect_ratio_to: 1.2
+      alt_text: null
+    - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7f7c2c00c814ed3d906232994a0f8310.jpg
+      credit: null
+      aspect_ratio_from: 1.2
+      aspect_ratio_to: 1.9
+      alt_text: null
+    - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+      credit: null
+      aspect_ratio_from: 1.9
+      aspect_ratio_to: 2.5
+      alt_text: null
+is_free: false
+date:
+  published: 1339869600
+  begin: 1339869600
+  end: 1339877220
+image:
+  overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+  detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+blocked_in: []
+additional_broadcasts: null
+event_title: null
+type: vod
+programme: ""
+short_description: 雅尼克·尼泽-塞冈在本场音乐会中为我们呈现了世界文学史中两段著名的爱情故事。彼得·伊里奇·柴科夫斯基的《罗密欧与朱丽叶》带有晚期浪漫主义的浓墨重彩，而与之形成鲜明对比的是莫里斯·拉威尔时而圆滑细腻、时而刻薄尖锐的《达芙妮与克罗伊》。这两部作品在音乐与情感方面相辅相成、契合完美。
+artist_biographies: null
+works_introduction: null
+copyright: © 2012 Berlin Phil Media GmbH
+duration_total: 6153
+duration_preview: 165
+max_resolution: 1080p
+hdr_formats: []
+audio_formats:
+  stereo:
+    - aac
+    - flac
+  surround: []
+  immersive: []
+trailer_url_sd: http://world-vod.dchdns.net/dl/dch/2589-t/h264_MEDIUM_ONE_en.mp4
+trailer_url_hd: http://world-vod.dchdns.net/dl/dch/2589-t/h264_HIGH_en.mp4
+metadata:
+  title: 雅尼克·尼泽-塞冈演绎柴科夫斯基与拉威尔作品
+  description: 雅尼克·尼泽-塞冈在本场音乐会中为我们呈现了世界文学史中两段著名的爱情故事。彼得·伊里奇·柴科夫斯基的《罗密欧与朱丽叶》带有晚期浪漫主义的浓墨重彩，而与之形成鲜明对比的是莫里斯·拉威尔时而圆滑细腻、时而刻薄尖锐的《达芙妮与克罗伊》。这两部作品在音乐与情感方面相辅相成、契合完美。
+_links:
+  self:
+    href: //api.digitalconcerthall.com/v2/concert/2589
+  artist:
+    - href: //api.digitalconcerthall.com/v2/artist/1
+      updated: 1678179010
+      id: "1"
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+            credit: null
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+            credit: null
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+            credit: null
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+        profile:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/profile-square.jpg
+            credit: null
+            aspect_ratio_from: 1
+            aspect_ratio_to: 1
+            alt_text: null
+      name: 柏林爱乐乐团
+      display_name: 柏林爱乐乐团
+      display_type: group
+      name_prefix: null
+      first_name: null
+      last_name: null
+      group_name: 柏林爱乐乐团
+      sort_letter: B
+      is_highlighted: false
+      fields_of_work: []
+      count:
+        as_ensemble:
+          concert_total: 655
+          concert_vod: 642
+          concert_live: 11
+          concert_in_post_production: 2
+        as_film_participant:
+          film: 17
+        as_interview_participant:
+          interview: 0
+      fame: 1
+      role:
+        type: group
+        name: null
+    - href: //api.digitalconcerthall.com/v2/artist/257
+      updated: 1677849092
+      id: "257"
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/e0f9b7da1a3ef30e708d54621944e3aa.jpg
+            credit: Hans van der Woerd
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89612c856b42abb363b8d1c06b715e96.jpg
+            credit: Hans van der Woerd
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/63dc8de8a96d3f20ac786762cd3a82a3.jpg
+            credit: Hans van der Woerd
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+        profile:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/dc5e99f2e3a9f94c94a7743f7a076769.jpg
+            credit: Hans van der Woerd
+            aspect_ratio_from: 1
+            aspect_ratio_to: 1
+            alt_text: null
+      name: 雅尼克·尼泽-塞冈
+      display_name: 尼泽-塞冈·雅尼克
+      display_type: person
+      name_prefix: null
+      first_name: 雅尼克
+      last_name: 尼泽-塞冈
+      group_name: null
+      sort_letter: "N"
+      is_highlighted: false
+      fields_of_work:
+        - conductor
+      count:
+        as_composer:
+          work_total: 0
+          work_vod: 0
+          work_live: 0
+          work_in_post_production: 0
+        as_conductor:
+          concert_total: 7
+          concert_vod: 7
+          concert_live: 0
+          concert_in_post_production: 0
+        as_soloist:
+          work_total: 0
+          work_vod: 0
+          work_live: 0
+          work_in_post_production: 0
+        as_film_participant:
+          film: 0
+        as_interview_participant:
+          interview: 6
+      fame: 1
+      role:
+        type: conductor
+        name: null
+  season:
+    - href: //api.digitalconcerthall.com/v2/season/6
+      updated: 1677849092
+      id: "6"
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7764b0320bc8f19f04c306e564ee0043.jpg
+            credit: null
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7764b0320bc8f19f04c306e564ee0043.jpg
+            credit: null
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7764b0320bc8f19f04c306e564ee0043.jpg
+            credit: null
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+      label: 2011/12
+      count:
+        concert_total: 49
+        concert_vod: 49
+        concert_live: 0
+        concert_in_post_production: 0
+        work_total: 144
+        work_vod: 144
+        work_live: 0
+        work_in_post_production: 0
+        interview: 36
+        concert: 49
+        work: 144
+        vod: 49
+        live: 0
+  star:
+    - href: //api.digitalconcerthall.com/v2/artist/15
+      updated: 1678110623
+      id: "15"
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+            credit: null
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+            credit: null
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+            credit: null
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+        profile:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/profile-square.jpg
+            credit: null
+            aspect_ratio_from: 1
+            aspect_ratio_to: 1
+            alt_text: null
+      name: 沃尔特·赛法斯
+      display_name: 赛法斯·沃尔特
+      display_type: person
+      name_prefix: ""
+      first_name: 沃尔特
+      last_name: 赛法斯
+      group_name: null
+      sort_letter: S
+      is_highlighted: false
+      fields_of_work:
+        - soloist
+      count:
+        as_composer:
+          work_total: 0
+          work_vod: 0
+          work_live: 0
+          work_in_post_production: 0
+        as_conductor:
+          concert_total: 0
+          concert_vod: 0
+          concert_live: 0
+          concert_in_post_production: 0
+        as_soloist:
+          work_total: 1
+          work_vod: 1
+          work_live: 0
+          work_in_post_production: 0
+        as_film_participant:
+          film: 0
+        as_interview_participant:
+          interview: 2
+      fame: 2
+      role:
+        type: instrument
+        name: 单簧管
+    - href: //api.digitalconcerthall.com/v2/artist/57
+      updated: 1677849123
+      id: "57"
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+            credit: null
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+            credit: null
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+            credit: null
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+        profile:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/profile-square.jpg
+            credit: null
+            aspect_ratio_from: 1
+            aspect_ratio_to: 1
+            alt_text: null
+      name: 柏林广播合唱团
+      display_name: 柏林广播合唱团
+      display_type: group
+      name_prefix: null
+      first_name: null
+      last_name: null
+      group_name: 柏林广播合唱团
+      sort_letter: B
+      is_highlighted: false
+      fields_of_work: []
+      count:
+        as_ensemble:
+          concert_total: 79
+          concert_vod: 78
+          concert_live: 1
+          concert_in_post_production: 0
+        as_film_participant:
+          film: 0
+        as_interview_participant:
+          interview: 0
+      fame: 2
+      role:
+        type: group
+        name: null
+  streams:
+    href: null
+  streams_trailer:
+    href: //api.digitalconcerthall.com/v2/streams/2589-t
+    id: 2589-t
+_embedded:
+  work:
+    - updated: 1678110623
+      id: 2589-1
+      title: 《模进 I》为单簧管而作
+      short_title: null
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/9056f8143b69870f111125a60bd615bd.jpg
+            credit: null
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7f7c2c00c814ed3d906232994a0f8310.jpg
+            credit: null
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+            credit: null
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+      is_free: false
+      date:
+        published: 1339869600
+        begin: 1339869600
+      name_composer: 卢奇亚诺·贝利奥
+      display_name_composer: 贝利奥·卢奇亚诺·
+      concert_id: "2589"
+      concert_href: //api.digitalconcerthall.com/v2/concert/2589
+      name_orchestra: []
+      name_conductor: []
+      image:
+        overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+        detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+      blocked_in: []
+      copyright: © 2012 Berlin Phil Media GmbH
+      max_resolution: 1080p
+      hdr_formats: []
+      audio_formats:
+        stereo:
+          - aac
+          - flac
+        surround: []
+        immersive: []
+      is_highlight: false
+      duration: 682
+      duration_total: 865
+      caption: null
+      cuepoints:
+        - time: 25
+          duration: 723
+          text: Sequenza IXa for clarinet
+        - time: 748
+          duration: 117
+          text: Applause
+      skippable_segments:
+        - time: 0
+          duration: 25
+          type: intro
+        - time: 748
+          duration: 117
+          type: outro
+      metadata:
+        title: null
+        description: '作曲: 卢奇亚诺 贝利奥'
+      _links:
+        concert:
+          - href: //api.digitalconcerthall.com/v2/concert/2589
+            updated: 1677835925
+            id: "2589"
+            title: 雅尼克·尼泽-塞冈演绎柴科夫斯基与拉威尔作品
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/9056f8143b69870f111125a60bd615bd.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7f7c2c00c814ed3d906232994a0f8310.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            is_free: false
+            date:
+              published: 1339869600
+              begin: 1339869600
+              end: 1339877220
+            image:
+              overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+              detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+            blocked_in: []
+            additional_broadcasts: null
+        artist:
+          - href: //api.digitalconcerthall.com/v2/artist/15
+            updated: 1678110623
+            id: "15"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/profile-square.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 沃尔特·赛法斯
+            display_name: 赛法斯·沃尔特
+            display_type: person
+            name_prefix: ""
+            first_name: 沃尔特
+            last_name: 赛法斯
+            group_name: null
+            sort_letter: S
+            is_highlighted: false
+            fields_of_work:
+              - soloist
+            count:
+              as_composer:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_conductor:
+                concert_total: 0
+                concert_vod: 0
+                concert_live: 0
+                concert_in_post_production: 0
+              as_soloist:
+                work_total: 1
+                work_vod: 1
+                work_live: 0
+                work_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 2
+            fame: 2
+            role:
+              type: instrument
+              name: 单簧管
+          - href: //api.digitalconcerthall.com/v2/artist/62
+            updated: 1677849017
+            id: "62"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/eedb7abcdfe0501a0e280abed3629380.jpg
+                  credit: Eric Marinitsch/Universal Edition
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 卢奇亚诺·贝利奥
+            display_name: 贝利奥·卢奇亚诺·
+            display_type: person
+            name_prefix: null
+            first_name: 卢奇亚诺
+            last_name: 贝利奥
+            group_name: null
+            sort_letter: B
+            is_highlighted: false
+            fields_of_work:
+              - composer
+            count:
+              as_composer:
+                work_total: 19
+                work_vod: 19
+                work_live: 0
+                work_in_post_production: 0
+              as_conductor:
+                concert_total: 0
+                concert_vod: 0
+                concert_live: 0
+                concert_in_post_production: 0
+              as_soloist:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 0
+            role:
+              type: composer
+              name: null
+        epoch:
+          - href: //api.digitalconcerthall.com/v2/epoch/5
+            updated: 1677871755
+            id: "5"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            name: 现当代
+            count:
+              concert_total: 501
+              concert_vod: 501
+              concert_live: 0
+              concert_in_post_production: 0
+              work_total: 1169
+              work_vod: 1132
+              work_live: 29
+              work_in_post_production: 8
+              concert: 501
+              work: 1132
+              interview: 1
+        streams:
+          href: //api.digitalconcerthall.com/v2/streams/2589-1
+    - updated: 1677855682
+      id: 2589-2
+      title: 《罗密欧与茱莉叶》根据莎士比亚改编的幻想序曲
+      short_title: null
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/9056f8143b69870f111125a60bd615bd.jpg
+            credit: null
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7f7c2c00c814ed3d906232994a0f8310.jpg
+            credit: null
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+            credit: null
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+      is_free: false
+      date:
+        published: 1339869600
+        begin: 1339869600
+      name_composer: 彼得·伊里奇·柴可夫斯基
+      display_name_composer: 柴可夫斯基·彼得·伊里奇
+      concert_id: "2589"
+      concert_href: //api.digitalconcerthall.com/v2/concert/2589
+      name_orchestra: []
+      name_conductor: []
+      image:
+        overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+        detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+      blocked_in: []
+      copyright: © 2012 Berlin Phil Media GmbH
+      max_resolution: 1080p
+      hdr_formats: []
+      audio_formats:
+        stereo:
+          - aac
+          - flac
+        surround: []
+        immersive: []
+      is_highlight: false
+      duration: 1197
+      duration_total: 1398
+      caption: null
+      cuepoints:
+        - time: 37
+          duration: 1208
+          text: Romeo und Julia
+        - time: 1245
+          duration: 153
+          text: Applause
+      skippable_segments:
+        - time: 0
+          duration: 37
+          type: intro
+        - time: 1245
+          duration: 153
+          type: outro
+      metadata:
+        title: null
+        description: '作曲: 彼得·伊里奇 柴可夫斯基'
+      _links:
+        concert:
+          - href: //api.digitalconcerthall.com/v2/concert/2589
+            updated: 1677835925
+            id: "2589"
+            title: 雅尼克·尼泽-塞冈演绎柴科夫斯基与拉威尔作品
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/9056f8143b69870f111125a60bd615bd.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7f7c2c00c814ed3d906232994a0f8310.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            is_free: false
+            date:
+              published: 1339869600
+              begin: 1339869600
+              end: 1339877220
+            image:
+              overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+              detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+            blocked_in: []
+            additional_broadcasts: null
+        artist:
+          - href: //api.digitalconcerthall.com/v2/artist/306
+            updated: 1677849123
+            id: "306"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/996121690587a3a334ba1d1b418ded4b.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 彼得·伊里奇·柴可夫斯基
+            display_name: 柴可夫斯基·彼得·伊里奇
+            display_type: person
+            name_prefix: null
+            first_name: 彼得·伊里奇
+            last_name: 柴可夫斯基
+            group_name: null
+            sort_letter: CH
+            is_highlighted: false
+            fields_of_work:
+              - composer
+            count:
+              as_composer:
+                work_total: 71
+                work_vod: 67
+                work_live: 3
+                work_in_post_production: 1
+              as_conductor:
+                concert_total: 0
+                concert_vod: 0
+                concert_live: 0
+                concert_in_post_production: 0
+              as_soloist:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 0
+            role:
+              type: composer
+              name: null
+        epoch:
+          - href: //api.digitalconcerthall.com/v2/epoch/4
+            updated: 1677855682
+            id: "4"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89dffea035376690229fc92be867c8bf.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89dffea035376690229fc92be867c8bf.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89dffea035376690229fc92be867c8bf.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            name: 晚期浪漫派
+            count:
+              concert_total: 423
+              concert_vod: 423
+              concert_live: 0
+              concert_in_post_production: 0
+              work_total: 783
+              work_vod: 770
+              work_live: 11
+              work_in_post_production: 2
+              concert: 423
+              work: 770
+              interview: 0
+        streams:
+          href: //api.digitalconcerthall.com/v2/streams/2589-2
+    - updated: 1677871755
+      id: 2589-3
+      title: 《达芙妮与克罗伊》三部交响舞蹈剧
+      short_title: null
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/9056f8143b69870f111125a60bd615bd.jpg
+            credit: null
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7f7c2c00c814ed3d906232994a0f8310.jpg
+            credit: null
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+            credit: null
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+      is_free: false
+      date:
+        published: 1339869600
+        begin: 1339869600
+      name_composer: 莫里斯·拉威尔
+      display_name_composer: 拉威尔·莫里斯
+      concert_id: "2589"
+      concert_href: //api.digitalconcerthall.com/v2/concert/2589
+      name_orchestra: []
+      name_conductor: []
+      image:
+        overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+        detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+      blocked_in: []
+      copyright: © 2012 Berlin Phil Media GmbH
+      max_resolution: 1080p
+      hdr_formats: []
+      audio_formats:
+        stereo:
+          - aac
+          - flac
+        surround: []
+        immersive: []
+      is_highlight: false
+      duration: 3406
+      duration_total: 3890
+      caption: null
+      cuepoints:
+        - time: 56
+          duration: 185
+          text: I. Première Partie
+        - time: 241
+          duration: 436
+          text: Danse religieuse
+        - time: 677
+          duration: 102
+          text: Danse générale
+        - time: 779
+          duration: 116
+          text: Danse grotesque de Dorcon
+        - time: 895
+          duration: 806
+          text: Danse légère et gracieuse de Daphnis
+        - time: 1701
+          duration: 156
+          text: II. Deuxième Partie
+        - time: 1857
+          duration: 278
+          text: Danse guerrière
+        - time: 2135
+          duration: 366
+          text: Danse suppliante de Chloé
+        - time: 2501
+          duration: 756
+          text: III. Troisième Partie
+        - time: 3257
+          duration: 50
+          text: Danse générale
+        - time: 3307
+          duration: 16
+          text: Danse de Daphnis et Chloé
+        - time: 3323
+          duration: 35
+          text: Danse de Dorcon
+        - time: 3358
+          duration: 104
+          text: 'Danse finale: Bacchanale'
+        - time: 3462
+          duration: 428
+          text: Applause
+      skippable_segments:
+        - time: 0
+          duration: 56
+          type: intro
+        - time: 3462
+          duration: 428
+          type: outro
+      metadata:
+        title: 《达芙妮与克罗伊》三部交响舞蹈剧
+        description: '作曲: 莫里斯 拉威尔'
+      _links:
+        concert:
+          - href: //api.digitalconcerthall.com/v2/concert/2589
+            updated: 1677835925
+            id: "2589"
+            title: 雅尼克·尼泽-塞冈演绎柴科夫斯基与拉威尔作品
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/9056f8143b69870f111125a60bd615bd.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7f7c2c00c814ed3d906232994a0f8310.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            is_free: false
+            date:
+              published: 1339869600
+              begin: 1339869600
+              end: 1339877220
+            image:
+              overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+              detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+            blocked_in: []
+            additional_broadcasts: null
+        artist:
+          - href: //api.digitalconcerthall.com/v2/artist/79
+            updated: 1677849123
+            id: "79"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/68465bb1e60a9e37fc9342119ae32512.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 莫里斯·拉威尔
+            display_name: 拉威尔·莫里斯
+            display_type: person
+            name_prefix: null
+            first_name: 莫里斯
+            last_name: 拉威尔
+            group_name: null
+            sort_letter: L
+            is_highlighted: false
+            fields_of_work:
+              - composer
+            count:
+              as_composer:
+                work_total: 67
+                work_vod: 66
+                work_live: 1
+                work_in_post_production: 0
+              as_conductor:
+                concert_total: 0
+                concert_vod: 0
+                concert_live: 0
+                concert_in_post_production: 0
+              as_soloist:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 0
+            role:
+              type: composer
+              name: null
+          - href: //api.digitalconcerthall.com/v2/artist/57
+            updated: 1677849123
+            id: "57"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/profile-square.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 柏林广播合唱团
+            display_name: 柏林广播合唱团
+            display_type: group
+            name_prefix: null
+            first_name: null
+            last_name: null
+            group_name: 柏林广播合唱团
+            sort_letter: B
+            is_highlighted: false
+            fields_of_work: []
+            count:
+              as_ensemble:
+                concert_total: 79
+                concert_vod: 78
+                concert_live: 1
+                concert_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 2
+            role:
+              type: group
+              name: null
+          - href: //api.digitalconcerthall.com/v2/artist/453
+            updated: 1676918335
+            id: "453"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-narrow.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-medium.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/standard-wide.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fallback/artist/profile-square.jpg
+                  credit: null
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 迈克尔·格雷瑟
+            display_name: 格雷瑟·迈克尔
+            display_type: person
+            name_prefix: ""
+            first_name: 迈克尔
+            last_name: 格雷瑟
+            group_name: null
+            sort_letter: G
+            is_highlighted: false
+            fields_of_work: []
+            count:
+              as_composer:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_conductor:
+                concert_total: 0
+                concert_vod: 0
+                concert_live: 0
+                concert_in_post_production: 0
+              as_soloist:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 0
+            fame: 0
+            role:
+              type: other
+              name: 合唱指挥
+        epoch:
+          - href: //api.digitalconcerthall.com/v2/epoch/5
+            updated: 1677871755
+            id: "5"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/437375247f74bcc59cf0badd1ae45609.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            name: 现当代
+            count:
+              concert_total: 501
+              concert_vod: 501
+              concert_live: 0
+              concert_in_post_production: 0
+              work_total: 1169
+              work_vod: 1132
+              work_live: 29
+              work_in_post_production: 8
+              concert: 501
+              work: 1132
+              interview: 1
+        streams:
+          href: //api.digitalconcerthall.com/v2/streams/2589-3
+  interview:
+    - updated: 1678182829
+      id: 2589-4
+      title: 雅尼克·尼泽-塞冈谈论拉威尔《达芙妮与克洛埃》
+      short_title: ""
+      image_variants:
+        standard:
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/pieces/e046d246586e370514a1e7ad9f559dce.jpg
+            credit: null
+            aspect_ratio_from: 0.7
+            aspect_ratio_to: 1.2
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/pieces/e046d246586e370514a1e7ad9f559dce.jpg
+            credit: null
+            aspect_ratio_from: 1.2
+            aspect_ratio_to: 1.9
+            alt_text: null
+          - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/pieces/e046d246586e370514a1e7ad9f559dce.jpg
+            credit: null
+            aspect_ratio_from: 1.9
+            aspect_ratio_to: 2.5
+            alt_text: null
+      is_free: true
+      date:
+        published: 1339869600
+        begin: 1339797600
+      name_composer: null
+      display_name_composer: null
+      is_highlight: false
+      image:
+        overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/pieces/e046d246586e370514a1e7ad9f559dce.jpg
+        detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/pieces/e046d246586e370514a1e7ad9f559dce.jpg
+      blocked_in: []
+      copyright: null
+      max_resolution: 1080p
+      hdr_formats: []
+      audio_formats:
+        stereo:
+          - aac
+          - flac
+        surround: []
+        immersive: []
+      duration: 1029
+      duration_total: 1029
+      description: The press wrote of a “memorable evening” with a “rising star in the conducting firmament” when Yannick Nézet-Séguin, chief conductor designate of the Philadelphia Orchestra made ​​his debut with the Berliner Philharmoniker in October 2010. For his return to the podium of the Philharmonie, he has put together a programme that traces the ups and downs of love in powerful orchestral colours. In conversation with Emmanuel Pahud, principal flautist of the Berliner Philharmoniker, we learn more about the artist and the works performed in the concert.
+      short_description: 2012年6月的这场音乐会是雅尼克·尼泽-塞冈第二次执棒柏林爱乐乐团，他为这场演出选择了一组俄罗斯-法国作品。在这里，他与乐团的长笛演奏员艾曼纽·帕胡德进行了一次对话。
+      caption: null
+      cuepoints: null
+      transcript: null
+      metadata:
+        title: 雅尼克·尼泽-塞冈谈论拉威尔《达芙妮与克洛埃》
+        description: 2012年6月的这场音乐会是雅尼克·尼泽-塞冈第二次执棒柏林爱乐乐团，他为这场演出选择了一组俄罗斯-法国作品。在这里，他与乐团的长笛演奏员艾曼纽·帕胡德进行了一次对话。
+      _links:
+        self:
+          href: //api.digitalconcerthall.com/v2/interview/2589-4
+        category:
+          - href: //api.digitalconcerthall.com/v2/category/9
+            updated: 1676557386
+            id: "9"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fbfe67e9f2f8e9c0eefa04e4c24f3cc0.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fbfe67e9f2f8e9c0eefa04e4c24f3cc0.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/fbfe67e9f2f8e9c0eefa04e4c24f3cc0.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            name: 时代
+            type: work
+            count:
+              concert: 0
+              film: 0
+              interview: 257
+          - href: //api.digitalconcerthall.com/v2/category/12
+            updated: 1677608116
+            id: "12"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/50e8470df30480e11aa9597368486db8.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/50e8470df30480e11aa9597368486db8.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/50e8470df30480e11aa9597368486db8.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            name: 作品导赏
+            type: work
+            count:
+              concert: 0
+              film: 0
+              interview: 103
+        concert:
+          - href: //api.digitalconcerthall.com/v2/concert/2589
+            updated: 1677835925
+            id: "2589"
+            title: 雅尼克·尼泽-塞冈演绎柴科夫斯基与拉威尔作品
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/9056f8143b69870f111125a60bd615bd.jpg
+                  credit: null
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/7f7c2c00c814ed3d906232994a0f8310.jpg
+                  credit: null
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+                  credit: null
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+            is_free: false
+            date:
+              published: 1339869600
+              begin: 1339869600
+              end: 1339877220
+            image:
+              overview: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+              detail: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/82698c267d18365c5062441dddd9bb9e.jpg
+            blocked_in: []
+            additional_broadcasts: null
+        artist:
+          - href: //api.digitalconcerthall.com/v2/artist/124
+            updated: 1678182829
+            id: "124"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/f8bbea7fca7962a980667de11bb415da.jpg
+                  credit: Sebastian Hänel
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/16b2891ea2cc818a71f33abbc9f24628.jpg
+                  credit: Sebastian Hänel
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/0725cb68190783f49775a1bc110cf465.jpg
+                  credit: Sebastian Hänel
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/c959b8e752cc028ec24191668bf248b4.jpg
+                  credit: Sebastian Hänel
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 艾曼纽·帕胡德
+            display_name: 帕胡德·艾曼纽
+            display_type: person
+            name_prefix: null
+            first_name: 艾曼纽
+            last_name: 帕胡德
+            group_name: null
+            sort_letter: P
+            is_highlighted: false
+            fields_of_work:
+              - soloist
+            count:
+              as_composer:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_conductor:
+                concert_total: 0
+                concert_vod: 0
+                concert_live: 0
+                concert_in_post_production: 0
+              as_soloist:
+                work_total: 12
+                work_vod: 12
+                work_live: 0
+                work_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 32
+            fame: 0
+            role:
+              type: other
+              name: null
+          - href: //api.digitalconcerthall.com/v2/artist/257
+            updated: 1677849092
+            id: "257"
+            image_variants:
+              standard:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/e0f9b7da1a3ef30e708d54621944e3aa.jpg
+                  credit: Hans van der Woerd
+                  aspect_ratio_from: 0.7
+                  aspect_ratio_to: 1.2
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/89612c856b42abb363b8d1c06b715e96.jpg
+                  credit: Hans van der Woerd
+                  aspect_ratio_from: 1.2
+                  aspect_ratio_to: 1.9
+                  alt_text: null
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/63dc8de8a96d3f20ac786762cd3a82a3.jpg
+                  credit: Hans van der Woerd
+                  aspect_ratio_from: 1.9
+                  aspect_ratio_to: 2.5
+                  alt_text: null
+              profile:
+                - path: //images.digitalconcerthall.com/cms/thumbnails/{width}x{height}/images/core/dc5e99f2e3a9f94c94a7743f7a076769.jpg
+                  credit: Hans van der Woerd
+                  aspect_ratio_from: 1
+                  aspect_ratio_to: 1
+                  alt_text: null
+            name: 雅尼克·尼泽-塞冈
+            display_name: 尼泽-塞冈·雅尼克
+            display_type: person
+            name_prefix: null
+            first_name: 雅尼克
+            last_name: 尼泽-塞冈
+            group_name: null
+            sort_letter: "N"
+            is_highlighted: false
+            fields_of_work:
+              - conductor
+            count:
+              as_composer:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_conductor:
+                concert_total: 7
+                concert_vod: 7
+                concert_live: 0
+                concert_in_post_production: 0
+              as_soloist:
+                work_total: 0
+                work_vod: 0
+                work_live: 0
+                work_in_post_production: 0
+              as_film_participant:
+                film: 0
+              as_interview_participant:
+                interview: 6
+            fame: 0
+            role:
+              type: other
+              name: null
+        streams:
+          href: //api.digitalconcerthall.com/v2/streams/2589-4
