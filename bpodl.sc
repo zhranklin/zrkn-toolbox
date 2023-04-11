@@ -1,4 +1,6 @@
-#!/usr/bin/env amm
+#!/usr/bin/env amm3m0
+//Ammonite 2.5.5
+//scala 3.2.0
 import $ivy.`com.lihaoyi::requests:0.8.0`
 import $ivy.`com.lihaoyi:upickle_2.13:2.0.0`
 import $ivy.`com.zhranklin:scala-tricks_2.13:0.2.1`
@@ -212,15 +214,19 @@ def adescription(id: String): Concert =
 end adescription
 
 @main
-def download(@arg(name = "audio-only") audioOnly: Boolean = false, args: Leftover[String]) = {
-  cd(oPath("/Users/zhranklin/bpodl"))
+def download(args: Leftover[String]) = {
+  val audioOnly: mainargs.Flag = mainargs.Flag(System.getenv().getOrDefault("AO", "false").toBoolean)
+  val path = System.getenv("HOME") + "/bpodl"
+  println(audioOnly)
+  println(path)
+  cd(oPath(path))
   args.value.foreach { id =>
     try {
       id match {
         case rr"""$id-$item""" =>
-          processLink(s"https://www.digitalconcerthall.com/zh/concert/$id", item, audioOnly)
+          processLink(s"https://www.digitalconcerthall.com/zh/concert/$id", item, audioOnly.value)
         case id =>
-          processLink(s"https://www.digitalconcerthall.com/zh/concert/$id", "", audioOnly)
+          processLink(s"https://www.digitalconcerthall.com/zh/concert/$id", "", audioOnly.value)
       }
     } catch {
       case e: Exception => e.printStackTrace()
