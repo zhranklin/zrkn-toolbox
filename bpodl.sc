@@ -1,6 +1,6 @@
-#!/usr/bin/env amm3m0
-//Ammonite 2.5.5
-//scala 3.2.0
+#!/usr/bin/env amm3
+//Ammonite 2.5.4
+//scala 3.1.0
 import $ivy.`com.lihaoyi::requests:0.8.0`
 import $ivy.`com.lihaoyi:upickle_2.13:2.0.0`
 import $ivy.`com.zhranklin:scala-tricks_2.13:0.2.1`
